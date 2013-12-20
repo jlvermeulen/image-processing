@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace INFOIBV
 {
@@ -70,8 +71,14 @@ namespace INFOIBV
             //    }
             //}
 
-            Color[,] processed = Convolution.Apply(Image, SharpenKernel2D);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            Color[,] marker = new Color[512, 512];
+            marker[0, 0] = Color.White;
+            Color[,] processed = Operations.Reconstruction(marker, Image);
             Image = processed;
+            sw.Stop();
+            this.Text = sw.ElapsedMilliseconds.ToString();
 
             //==========================================================================================
 

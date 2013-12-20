@@ -1,11 +1,12 @@
-﻿using System.Drawing;
-using System;
+﻿using System;
+using System.Drawing;
 
 namespace INFOIBV
 {
-    public static class Convolution // actually correlation
+    public static partial class Operations
     {
-        public static Color[,] Apply(Color[,] original, double[,] kernel)
+        // actually correlation
+        public static Color[,] Convolution(Color[,] original, double[,] kernel)
         {
             Color[,] processed = new Color[original.GetLength(0), original.GetLength(0)];
 
@@ -33,7 +34,7 @@ namespace INFOIBV
             return processed;
         }
 
-        public static Color[,] Apply(Color[,] original, double[] kernelx, double[] kernely)
+        public static Color[,] Convolution(Color[,] original, double[] kernelX, double[] kernelY)
         {
             Color[,] pass1 = new Color[original.GetLength(0), original.GetLength(0)];
             Color[,] pass2 = new Color[original.GetLength(0), original.GetLength(0)];
@@ -42,14 +43,14 @@ namespace INFOIBV
                 for (int y = 0; y < original.GetLength(1); y++)
                 {
                     double[] value = new double[3];
-                    for (int i = kernelx.Length - 1; i >= 0; i--)
+                    for (int i = kernelX.Length - 1; i >= 0; i--)
                     {
                         // current pixel, extrapolate if necessary
-                        int pxx = Math.Max(Math.Min(x + i - kernelx.Length / 2, original.GetLength(0) - 1), 0);
+                        int pxx = Math.Max(Math.Min(x + i - kernelX.Length / 2, original.GetLength(0) - 1), 0);
 
-                        value[0] += kernelx[i] * original[pxx, y].R;
-                        value[1] += kernelx[i] * original[pxx, y].G;
-                        value[2] += kernelx[i] * original[pxx, y].B;
+                        value[0] += kernelX[i] * original[pxx, y].R;
+                        value[1] += kernelX[i] * original[pxx, y].G;
+                        value[2] += kernelX[i] * original[pxx, y].B;
                     }
                     for (int i = 0; i < value.Length; i++)
                         value[i] = Math.Max(Math.Min(value[i], 255), 0);
@@ -61,14 +62,14 @@ namespace INFOIBV
                 for (int y = 0; y < original.GetLength(1); y++)
                 {
                     double[] value = new double[3];
-                    for (int i = kernelx.Length - 1; i >= 0; i--)
+                    for (int i = kernelX.Length - 1; i >= 0; i--)
                     {
                         // current pixel, extrapolate if necessary
-                        int pxy = Math.Max(Math.Min(y + i - kernelx.Length / 2, original.GetLength(1) - 1), 0);
+                        int pxy = Math.Max(Math.Min(y + i - kernelY.Length / 2, original.GetLength(1) - 1), 0);
 
-                        value[0] += kernelx[i] * pass1[x, pxy].R;
-                        value[1] += kernelx[i] * pass1[x, pxy].G;
-                        value[2] += kernelx[i] * pass1[x, pxy].B;
+                        value[0] += kernelX[i] * pass1[x, pxy].R;
+                        value[1] += kernelX[i] * pass1[x, pxy].G;
+                        value[2] += kernelX[i] * pass1[x, pxy].B;
                     }
                     for (int i = 0; i < value.Length; i++)
                         value[i] = Math.Max(Math.Min(value[i], 255), 0);
