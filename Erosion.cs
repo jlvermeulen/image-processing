@@ -7,7 +7,7 @@ namespace INFOIBV
     {
         public static Color[,] Erosion(Color[,] original, bool[,] structuringElement)
         {
-            Color[,] processed = new Color[original.GetLength(0), original.GetLength(1)];
+            Color[,] result = new Color[original.GetLength(0), original.GetLength(1)];
 
             for (int x = 0; x < original.GetLength(0); x++)
                 for (int y = 0; y < original.GetLength(1); y++)
@@ -24,10 +24,10 @@ namespace INFOIBV
                                 min = Math.Min(min, original[pxx, pxy].R);
                         }
 
-                    processed[x, y] = Color.FromArgb(min, min, min);
+                    result[x, y] = Color.FromArgb(min, min, min);
                 }
 
-            return processed;
+            return result;
         }
 
         public static Color[,] Erosion(Color[,] original, bool[] structuringElementX, bool[] structuringElementY)

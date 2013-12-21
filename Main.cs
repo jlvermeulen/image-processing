@@ -81,8 +81,8 @@ namespace INFOIBV
             for (int i = 0; i < n; i++)
                 selx[i] = sely[i] = true;
 
-            Color[,] processed = Operations.OpeningByReconstruction(Image, selx, sely);
-            Image = processed;
+            Color[,] result = Operations.OpeningByReconstruction(Image, selx, sely);
+            Image = result;
             sw.Stop();
             this.Text = sw.ElapsedMilliseconds.ToString();
 

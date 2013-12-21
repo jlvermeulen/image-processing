@@ -8,7 +8,7 @@ namespace INFOIBV
     {
         public static Color[,] Reconstruction(Color[,] markers, Color[,] mask)
         {
-            Color[,] processed = new Color[markers.GetLength(0), markers.GetLength(1)];
+            Color[,] result = new Color[markers.GetLength(0), markers.GetLength(1)];
 
             DMaxHeap<Pixel> heap = new DMaxHeap<Pixel>(5);
 
@@ -20,15 +20,15 @@ namespace INFOIBV
                         Pixel p = new Pixel(x, y, Math.Min(markers[x, y].R, mask[x, y].R));
                         heap.Add(p);
                     }
-                    processed[x, y] = Color.Black;
+                    result[x, y] = Color.Black;
                 }
 
             while (heap.Count > 0)
             {
                 Pixel p = heap.Extract();
-                if (p.Value <= processed[p.X, p.Y].R)
+                if (p.Value <= result[p.X, p.Y].R)
                     continue;
-                processed[p.X, p.Y] = Color.FromArgb(p.Value, p.Value, p.Value);
+                result[p.X, p.Y] = Color.FromArgb(p.Value, p.Value, p.Value);
 
                 for (int i = -1; i <= 1; i++)
                     for (int j = -1; j <= 1; j++)
@@ -39,14 +39,14 @@ namespace INFOIBV
                             continue;
 
                         byte val = Math.Min(mask[pxx, pxy].R, p.Value);
-                        if (val == processed[pxx, pxy].R)
+                        if (val == result[pxx, pxy].R)
                             continue;
 
                         heap.Add(new Pixel(pxx, pxy, val));
                     }
             }
 
-            return processed;
+            return result;
         }
 
         private struct Pixel : IComparable<Pixel>

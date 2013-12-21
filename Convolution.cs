@@ -8,7 +8,7 @@ namespace INFOIBV
         // actually correlation
         public static Color[,] Convolution(Color[,] original, double[,] kernel)
         {
-            Color[,] processed = new Color[original.GetLength(0), original.GetLength(0)];
+            Color[,] result = new Color[original.GetLength(0), original.GetLength(0)];
 
             for (int x = 0; x < original.GetLength(0); x++)
                 for (int y = 0; y < original.GetLength(1); y++)
@@ -28,10 +28,10 @@ namespace INFOIBV
                     for (int i = 0; i < value.Length; i++)
                         value[i] = Math.Max(Math.Min(value[i], 255), 0);
 
-                    processed[x, y] = Color.FromArgb((byte)Math.Round(value[0]), (byte)Math.Round(value[1]), (byte)Math.Round(value[2]));
+                    result[x, y] = Color.FromArgb((byte)Math.Round(value[0]), (byte)Math.Round(value[1]), (byte)Math.Round(value[2]));
                 }
 
-            return processed;
+            return result;
         }
 
         public static Color[,] Convolution(Color[,] original, double[] kernelX, double[] kernelY)

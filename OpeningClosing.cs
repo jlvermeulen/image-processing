@@ -7,34 +7,34 @@ namespace INFOIBV
     {
         public static Color[,] Opening(Color[,] original, bool[,] structuringElement)
         {
-            Color[,] processed;
-            processed = Erosion(original, structuringElement);
-            processed = Dilation(processed, structuringElement);
-            return processed;
+            Color[,] result;
+            result = Erosion(original, structuringElement);
+            result = Dilation(result, structuringElement);
+            return result;
         }
 
         public static Color[,] Closing(Color[,] original, bool[,] structuringElement)
         {
-            Color[,] processed;
-            processed = Dilation(original, structuringElement);
-            processed = Erosion(processed, structuringElement);
-            return processed;
+            Color[,] result;
+            result = Dilation(original, structuringElement);
+            result = Erosion(result, structuringElement);
+            return result;
         }
 
         public static Color[,] OpeningByReconstruction(Color[,] original, bool[,] structuringElement)
         {
-            Color[,] processed;
-            processed = Erosion(original, structuringElement);
-            processed = Reconstruction(processed, original);
-            return processed;
+            Color[,] result;
+            result = Erosion(original, structuringElement);
+            result = Reconstruction(result, original);
+            return result;
         }
 
         public static Color[,] OpeningByReconstruction(Color[,] original, bool[] structuringElementX, bool[] structuringElementY)
         {
-            Color[,] processed;
-            processed = Erosion(original, structuringElementX, structuringElementY);
-            processed = Reconstruction(processed, original);
-            return processed;
+            Color[,] result;
+            result = Erosion(original, structuringElementX, structuringElementY);
+            result = Reconstruction(result, original);
+            return result;
         }
     }
 }
