@@ -55,13 +55,13 @@ namespace INFOIBV
                 for (int y = 0; y < original.GetLength(1); y++)
                 {
                     byte min = byte.MaxValue;
-                    for (int i = structuringElementX.Length - 1; i >= 0; i--)
+                    for (int i = structuringElementY.Length - 1; i >= 0; i--)
                     {
                         // current pixel, extrapolate if necessary
-                        int pxy = Math.Max(Math.Min(y + i - structuringElementX.Length / 2, original.GetLength(0) - 1), 0);
+                        int pxy = Math.Max(Math.Min(y + i - structuringElementY.Length / 2, original.GetLength(1) - 1), 0);
 
-                        if (structuringElementX[i])
-                            min = Math.Min(min, original[x, pxy].R);
+                        if (structuringElementY[i])
+                            min = Math.Min(min, pass1[x, pxy].R);
                     }
 
                     pass2[x, y] = Color.FromArgb(min, min, min);

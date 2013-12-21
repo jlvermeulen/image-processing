@@ -75,7 +75,13 @@ namespace INFOIBV
             sw.Start();
             Color[,] marker = new Color[512, 512];
             marker[0, 0] = Color.White;
-            Color[,] processed = Operations.Reconstruction(marker, Image);
+
+            int n = 35;
+            bool[] selx = new bool[n], sely = new bool[n];
+            for (int i = 0; i < n; i++)
+                selx[i] = sely[i] = true;
+
+            Color[,] processed = Operations.OpeningByReconstruction(Image, selx, sely);
             Image = processed;
             sw.Stop();
             this.Text = sw.ElapsedMilliseconds.ToString();

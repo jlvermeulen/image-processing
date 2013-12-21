@@ -6,18 +6,18 @@ namespace INFOIBV
 {
     public static partial class Operations
     {
-        public static Color[,] Reconstruction(Color[,] original, Color[,] mask)
+        public static Color[,] Reconstruction(Color[,] markers, Color[,] mask)
         {
-            Color[,] processed = new Color[original.GetLength(0), original.GetLength(1)];
+            Color[,] processed = new Color[markers.GetLength(0), markers.GetLength(1)];
 
             DMaxHeap<Pixel> heap = new DMaxHeap<Pixel>(5);
 
-            for (int x = 0; x < original.GetLength(0); x++)
-                for (int y = 0; y < original.GetLength(0); y++)
+            for (int x = 0; x < markers.GetLength(0); x++)
+                for (int y = 0; y < markers.GetLength(0); y++)
                 {
-                    if (original[x, y].R > 0 && mask[x, y].R > 0)
+                    if (markers[x, y].R > 0 && mask[x, y].R > 0)
                     {
-                        Pixel p = new Pixel(x, y, Math.Min(original[x, y].R, mask[x, y].R));
+                        Pixel p = new Pixel(x, y, Math.Min(markers[x, y].R, mask[x, y].R));
                         heap.Add(p);
                     }
                     processed[x, y] = Color.Black;
@@ -35,7 +35,7 @@ namespace INFOIBV
                     {
                         int pxx = p.X + i, pxy = p.Y + j;
 
-                        if (pxx < 0 || pxx >= original.GetLength(0) || pxy < 0 || pxy >= original.GetLength(1))
+                        if (pxx < 0 || pxx >= markers.GetLength(0) || pxy < 0 || pxy >= markers.GetLength(1))
                             continue;
 
                         byte val = Math.Min(mask[pxx, pxy].R, p.Value);
