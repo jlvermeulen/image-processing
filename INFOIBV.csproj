@@ -60,6 +60,7 @@
     <Compile Include="OpeningClosing.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Morphology.cs" />
     <Compile Include="Union.cs" />
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

@@ -73,16 +73,10 @@ namespace INFOIBV
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            Color[,] marker = new Color[512, 512];
-            marker[0, 0] = Color.White;
 
-            int n = 35;
-            bool[] selx = new bool[n], sely = new bool[n];
-            for (int i = 0; i < n; i++)
-                selx[i] = sely[i] = true;
-
-            Color[,] result = Operations.OpeningByReconstruction(Image, selx, sely);
-            Image = result;
+            bool[,] r = Morphology.Watershed(Image);
+            Image = Operations.Mask(Image, r);
+            
             sw.Stop();
             this.Text = sw.ElapsedMilliseconds.ToString();
 
