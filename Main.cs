@@ -56,30 +56,37 @@ namespace INFOIBV
                     Image[x, y] = this.InputImage.GetPixel(x, y); // Set pixel color in array at (x,y)
                 }
             }
-
-            //==========================================================================================
-            // TODO: include here your own code
-            // example: create a negative image
-            //for (int x = 0; x < this.InputImage.Size.Width; x++)
-            //{
-            //    for (int y = 0; y < this.InputImage.Size.Height; y++)
-            //    {
-            //        Color pixelColor = Image[x, y]; // Get the pixel color at coordinate (x,y)
-            //        Color updatedColor = Color.FromArgb(255 - pixelColor.R, 255 - pixelColor.G, 255 - pixelColor.B); // Negative image
-            //        Image[x, y] = updatedColor; // Set the new pixel color at coordinate (x,y)
-            //        this.progressBar.PerformStep(); // Increment progress bar
-            //    }
-            //}
-
+            
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            bool[,] r = Morphology.Watershed(Image);
-            Image = Operations.Mask(Image, r);
-            
-            sw.Stop();
-            this.Text = sw.ElapsedMilliseconds.ToString();
+            //bool[,] mask = Operations.Watershed(Image, 0.7m);
+            //Image = Operations.Mask(Image, mask);
 
+
+            //int[,] r = Operations.DistanceTransform(Image);
+            //int max = Int32.MinValue;
+            //for (int i = 0; i < 512; i++)
+            //    for (int j = 0; j < 512; j++)
+            //        max = Math.Max(max, r[i, j]);
+
+            //for (int i = 0; i < 512; i++)
+            //    for (int j = 0; j < 512; j++)
+            //        Image[i, j] = Color.FromArgb(255 * r[i, j] / max, 255 * r[i, j] / max, 255 * r[i, j] / max);
+
+            //var m = Operations.GetLocalMaxima(r);
+            //foreach (Tuple<int, int> aaa in m)
+            //{
+            //    Image[aaa.Item1, aaa.Item2] = Color.Red;
+            //    Image[aaa.Item1 - 1, aaa.Item2] = Color.Red;
+            //    Image[aaa.Item1 + 1, aaa.Item2] = Color.Red;
+            //    Image[aaa.Item1, aaa.Item2 - 1] = Color.Red;
+            //    Image[aaa.Item1, aaa.Item2 + 1] = Color.Red;
+            //}
+
+            this.Text = sw.ElapsedMilliseconds.ToString();
+            this.Text = Operations.Perimeter(Operations.WindowSlicing(Operations.ConvertToGreyscale(Image), 1, 255), 46, 27);
+            this.Text = Operations.Compactness(Operations.WindowSlicing(Operations.ConvertToGreyscale(Image), 1, 255), 46, 27).ToString();
             //==========================================================================================
 
             // Copy array to output Bitmap
