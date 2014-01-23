@@ -9,6 +9,8 @@ namespace INFOIBV
     {
         private Bitmap inputImage;
         private Bitmap outputImage;
+        private int currentStep = 0;
+        private int[,] prevData, data;
 
         public INFOIBV()
         {
@@ -28,47 +30,8 @@ namespace INFOIBV
                     this.inputImage.Size.Height > 512 || this.inputImage.Size.Width > 512) // Dimension check
                     MessageBox.Show("Error in image dimensions (have to be > 0 and <= 512)");
                 else
-                    this.pictureBox1.Image = this.inputImage; // Display input image
+                    this.inputImageBox.Image = this.inputImage; // Display input image
             }
-        }
-
-        private void applyButton_Click(object sender, EventArgs e)
-        {
-            if (this.inputImage == null) // Get out if no input image
-                return;
-            if (this.outputImage != null) // Reset output image
-                this.outputImage.Dispose();
-            this.outputImage = new Bitmap(this.inputImage.Size.Width, this.inputImage.Size.Height); // Create new output image
-            Color[,] image = new Color[this.inputImage.Size.Width, this.inputImage.Size.Height]; // Create array to speed-up operations (Bitmap functions are very slow)
-
-            // Setup progress bar
-            this.progressBar.Visible = true;
-            this.progressBar.Minimum = 1;
-            this.progressBar.Maximum = inputImage.Size.Width * inputImage.Size.Height;
-            this.progressBar.Value = 1;
-            this.progressBar.Step = 1;
-
-            // Copy input Bitmap to array            
-            for (int x = 0; x < this.inputImage.Size.Width; x++)
-                for (int y = 0; y < this.inputImage.Size.Height; y++)
-                    image[x, y] = this.inputImage.GetPixel(x, y); // Set pixel color in array at (x,y)
-            
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            int[,] greyValues = Operations.ConvertToGreyscale(image);
-            int[,] smoothed = Operations.Convolution(greyValues, SmoothingKernel1D, SmoothingKernel1D);
-            int[,] thresh = Operations.WindowSlicing(smoothed, 0, 180);
-            int[,] opening = Operations.OpeningByReconstruction(thresh, new bool[,] { { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true } });
-            int[,] shed = Operations.Mask(opening, Operations.Watershed(opening, 0.6m));
-
-            sw.Stop();
-
-            this.Text = sw.ElapsedMilliseconds.ToString();
-            this.outputImage = Operations.CreateImage(shed);
-
-            this.pictureBox2.Image = this.outputImage; // Display output image
-            this.progressBar.Visible = false; // Hide progress bar
         }
         
         private void saveButton_Click(object sender, EventArgs e)
@@ -79,6 +42,58 @@ namespace INFOIBV
                 this.outputImage.Save(this.saveImageDialog.FileName);
         }
 
-        private static double[] SmoothingKernel1D = new double[] { 1 / 16.0, 4 / 16.0, 6 / 16.0, 4 / 16.0, 1 / 16.0 }; 
+        private void step_Click(object sender, EventArgs e)
+        {
+            this.inputImage.Dispose();
+            this.inputImageBox.Image = this.inputImage = this.outputImage;
+            this.outputImageBox.Image = this.outputImage = null;
+
+            this.prevData = this.data;
+
+            this.currentStep++;
+        }
+
+        private void apply_Click(object sender, EventArgs e)
+        {
+            switch (currentStep)
+            {
+                case 0:
+                    Color[,] image = new Color[this.inputImage.Size.Width, this.inputImage.Size.Height]; // Create array to speed up operations (Bitmap functions are very slow)
+                    // Copy input Bitmap to array            
+                    for (int x = 0; x < this.inputImage.Size.Width; x++)
+                        for (int y = 0; y < this.inputImage.Size.Height; y++)
+                            image[x, y] = this.inputImage.GetPixel(x, y); // Set pixel color in array at (x,y)
+
+                    this.data = Operations.ConvertToGreyscale(image, red.Value, green.Value, blue.Value);
+                    break;
+
+                case 1:
+                    this.data = Operations.Convolution(this.prevData, new double[] { 1 }, new double[] { 1 });
+                    break;
+
+                case 2:
+                    this.data = Operations.WindowSlicing(this.prevData, (int)lowerThresh.Value, (int)upperThresh.Value);
+                    break;
+
+                case 3:
+                    this.data = Operations.OpeningByReconstruction(this.prevData, new bool[,] { { true, true, true }, { true, true, true }, { true, true, true } });
+                    break;
+
+                case 4:
+                    this.data = Operations.Mask(this.prevData, Operations.Watershed(this.prevData, shedThresh.Value));
+                    break;
+
+                default:
+                    break;
+            }
+
+            this.outputImageBox.Image = this.outputImage = Operations.CreateImage(this.data);
+
+            //int[,] greyValues = Operations.ConvertToGreyscale(image);
+            //int[,] smoothed = Operations.Convolution(greyValues, SmoothingKernel1D, SmoothingKernel1D);
+            //int[,] thresh = Operations.WindowSlicing(smoothed, 0, 180);
+            //int[,] opening = Operations.OpeningByReconstruction(thresh, new bool[,] { { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true } });
+            //int[,] shed = Operations.Mask(opening, Operations.Watershed(opening, 0.6m));
+        }
     }
 }

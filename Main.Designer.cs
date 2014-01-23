@@ -31,14 +31,27 @@
             this.LoadImageButton = new System.Windows.Forms.Button();
             this.openImageDialog = new System.Windows.Forms.OpenFileDialog();
             this.imageFileName = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.applyButton = new System.Windows.Forms.Button();
+            this.inputImageBox = new System.Windows.Forms.PictureBox();
             this.saveImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveButton = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.outputImageBox = new System.Windows.Forms.PictureBox();
+            this.step = new System.Windows.Forms.Button();
+            this.skip = new System.Windows.Forms.Button();
+            this.apply = new System.Windows.Forms.Button();
+            this.red = new System.Windows.Forms.NumericUpDown();
+            this.green = new System.Windows.Forms.NumericUpDown();
+            this.blue = new System.Windows.Forms.NumericUpDown();
+            this.lowerThresh = new System.Windows.Forms.NumericUpDown();
+            this.upperThresh = new System.Windows.Forms.NumericUpDown();
+            this.shedThresh = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.inputImageBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.outputImageBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.red)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.green)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lowerThresh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upperThresh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shedThresh)).BeginInit();
             this.SuspendLayout();
             // 
             // LoadImageButton
@@ -65,24 +78,15 @@
             this.imageFileName.Size = new System.Drawing.Size(316, 20);
             this.imageFileName.TabIndex = 1;
             // 
-            // pictureBox1
+            // inputImageBox
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(13, 45);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(512, 512);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            // 
-            // applyButton
-            // 
-            this.applyButton.Location = new System.Drawing.Point(478, 12);
-            this.applyButton.Name = "applyButton";
-            this.applyButton.Size = new System.Drawing.Size(103, 23);
-            this.applyButton.TabIndex = 3;
-            this.applyButton.Text = "Apply";
-            this.applyButton.UseVisualStyleBackColor = true;
-            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
+            this.inputImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.inputImageBox.Location = new System.Drawing.Point(13, 45);
+            this.inputImageBox.Name = "inputImageBox";
+            this.inputImageBox.Size = new System.Drawing.Size(512, 512);
+            this.inputImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.inputImageBox.TabIndex = 2;
+            this.inputImageBox.TabStop = false;
             // 
             // saveImageDialog
             // 
@@ -99,34 +103,183 @@
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // pictureBox2
+            // outputImageBox
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(531, 45);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(512, 512);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox2.TabIndex = 5;
-            this.pictureBox2.TabStop = false;
+            this.outputImageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.outputImageBox.Location = new System.Drawing.Point(531, 45);
+            this.outputImageBox.Name = "outputImageBox";
+            this.outputImageBox.Size = new System.Drawing.Size(512, 512);
+            this.outputImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.outputImageBox.TabIndex = 5;
+            this.outputImageBox.TabStop = false;
             // 
-            // progressBar
+            // step
             // 
-            this.progressBar.Location = new System.Drawing.Point(587, 14);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(276, 20);
-            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar.TabIndex = 6;
-            this.progressBar.Visible = false;
+            this.step.Location = new System.Drawing.Point(1050, 521);
+            this.step.Name = "step";
+            this.step.Size = new System.Drawing.Size(75, 35);
+            this.step.TabIndex = 6;
+            this.step.Text = "Next step";
+            this.step.UseVisualStyleBackColor = true;
+            this.step.Click += new System.EventHandler(this.step_Click);
+            // 
+            // skip
+            // 
+            this.skip.Location = new System.Drawing.Point(1131, 521);
+            this.skip.Name = "skip";
+            this.skip.Size = new System.Drawing.Size(75, 35);
+            this.skip.TabIndex = 7;
+            this.skip.Text = "Apply all";
+            this.skip.UseVisualStyleBackColor = true;
+            // 
+            // apply
+            // 
+            this.apply.Location = new System.Drawing.Point(1050, 402);
+            this.apply.Name = "apply";
+            this.apply.Size = new System.Drawing.Size(75, 35);
+            this.apply.TabIndex = 8;
+            this.apply.Text = "Apply step";
+            this.apply.UseVisualStyleBackColor = true;
+            this.apply.Click += new System.EventHandler(this.apply_Click);
+            // 
+            // red
+            // 
+            this.red.DecimalPlaces = 4;
+            this.red.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
+            this.red.Location = new System.Drawing.Point(1050, 65);
+            this.red.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.red.Name = "red";
+            this.red.Size = new System.Drawing.Size(75, 20);
+            this.red.TabIndex = 9;
+            this.red.Value = new decimal(new int[] {
+            2126,
+            0,
+            0,
+            262144});
+            // 
+            // green
+            // 
+            this.green.DecimalPlaces = 4;
+            this.green.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
+            this.green.Location = new System.Drawing.Point(1131, 65);
+            this.green.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.green.Name = "green";
+            this.green.Size = new System.Drawing.Size(75, 20);
+            this.green.TabIndex = 10;
+            this.green.Value = new decimal(new int[] {
+            7152,
+            0,
+            0,
+            262144});
+            // 
+            // blue
+            // 
+            this.blue.DecimalPlaces = 4;
+            this.blue.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            262144});
+            this.blue.Location = new System.Drawing.Point(1212, 65);
+            this.blue.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.blue.Name = "blue";
+            this.blue.Size = new System.Drawing.Size(75, 20);
+            this.blue.TabIndex = 11;
+            this.blue.Value = new decimal(new int[] {
+            722,
+            0,
+            0,
+            262144});
+            // 
+            // lowerThresh
+            // 
+            this.lowerThresh.Location = new System.Drawing.Point(1050, 136);
+            this.lowerThresh.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.lowerThresh.Name = "lowerThresh";
+            this.lowerThresh.Size = new System.Drawing.Size(75, 20);
+            this.lowerThresh.TabIndex = 12;
+            // 
+            // upperThresh
+            // 
+            this.upperThresh.Location = new System.Drawing.Point(1131, 136);
+            this.upperThresh.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.upperThresh.Name = "upperThresh";
+            this.upperThresh.Size = new System.Drawing.Size(75, 20);
+            this.upperThresh.TabIndex = 13;
+            this.upperThresh.Value = new decimal(new int[] {
+            180,
+            0,
+            0,
+            0});
+            // 
+            // shedThresh
+            // 
+            this.shedThresh.DecimalPlaces = 2;
+            this.shedThresh.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.shedThresh.Location = new System.Drawing.Point(1050, 231);
+            this.shedThresh.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.shedThresh.Name = "shedThresh";
+            this.shedThresh.Size = new System.Drawing.Size(75, 20);
+            this.shedThresh.TabIndex = 14;
+            this.shedThresh.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            65536});
             // 
             // INFOIBV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1052, 576);
-            this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.pictureBox2);
+            this.ClientSize = new System.Drawing.Size(1306, 568);
+            this.Controls.Add(this.shedThresh);
+            this.Controls.Add(this.upperThresh);
+            this.Controls.Add(this.lowerThresh);
+            this.Controls.Add(this.blue);
+            this.Controls.Add(this.green);
+            this.Controls.Add(this.red);
+            this.Controls.Add(this.apply);
+            this.Controls.Add(this.skip);
+            this.Controls.Add(this.step);
+            this.Controls.Add(this.outputImageBox);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.applyButton);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.inputImageBox);
             this.Controls.Add(this.imageFileName);
             this.Controls.Add(this.LoadImageButton);
             this.Location = new System.Drawing.Point(10, 10);
@@ -134,8 +287,14 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "INFOIBV";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputImageBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.outputImageBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.red)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.green)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lowerThresh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upperThresh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shedThresh)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,12 +305,19 @@
         private System.Windows.Forms.Button LoadImageButton;
         private System.Windows.Forms.OpenFileDialog openImageDialog;
         private System.Windows.Forms.TextBox imageFileName;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button applyButton;
+        private System.Windows.Forms.PictureBox inputImageBox;
         private System.Windows.Forms.SaveFileDialog saveImageDialog;
         private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.PictureBox outputImageBox;
+        private System.Windows.Forms.Button step;
+        private System.Windows.Forms.Button skip;
+        private System.Windows.Forms.Button apply;
+        private System.Windows.Forms.NumericUpDown red;
+        private System.Windows.Forms.NumericUpDown green;
+        private System.Windows.Forms.NumericUpDown blue;
+        private System.Windows.Forms.NumericUpDown lowerThresh;
+        private System.Windows.Forms.NumericUpDown upperThresh;
+        private System.Windows.Forms.NumericUpDown shedThresh;
 
     }
 }
