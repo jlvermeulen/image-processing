@@ -6,14 +6,14 @@ namespace INFOIBV
     public static partial class Operations
     {
         // actually correlation
-        public static Color[,] Convolution(Color[,] original, double[,] kernel)
+        public static int[,] Convolution(int[,] original, double[,] kernel)
         {
-            Color[,] result = new Color[original.GetLength(0), original.GetLength(0)];
+            int[,] result = new int[original.GetLength(0), original.GetLength(1)];
 
             for (int x = 0; x < original.GetLength(0); x++)
                 for (int y = 0; y < original.GetLength(1); y++)
                 {
-                    double[] value = new double[3];
+                    double value = 0;
                     for (int i = kernel.GetLength(0) - 1; i >= 0; i--)
                         for (int j = kernel.GetLength(1) - 1; j >= 0; j--)
                         {
@@ -21,60 +21,45 @@ namespace INFOIBV
                             int pxx = Math.Max(Math.Min(x + i - kernel.GetLength(0) / 2, original.GetLength(0) - 1), 0);
                             int pxy = Math.Max(Math.Min(y + j - kernel.GetLength(1) / 2, original.GetLength(1) - 1), 0);
 
-                            value[0] += kernel[i, j] * original[pxx, pxy].R;
-                            value[1] += kernel[i, j] * original[pxx, pxy].G;
-                            value[2] += kernel[i, j] * original[pxx, pxy].B;
+                            value += kernel[i, j] * original[pxx, pxy];
                         }
-                    for (int i = 0; i < value.Length; i++)
-                        value[i] = Math.Max(Math.Min(value[i], 255), 0);
-
-                    result[x, y] = Color.FromArgb((byte)Math.Round(value[0]), (byte)Math.Round(value[1]), (byte)Math.Round(value[2]));
+                    result[x, y] = (byte)Math.Round(Math.Max(Math.Min(value, 255), 0)); ;
                 }
 
             return result;
         }
 
-        public static Color[,] Convolution(Color[,] original, double[] kernelX, double[] kernelY)
+        public static int[,] Convolution(int[,] original, double[] kernelX, double[] kernelY)
         {
-            Color[,] pass1 = new Color[original.GetLength(0), original.GetLength(0)];
-            Color[,] pass2 = new Color[original.GetLength(0), original.GetLength(0)];
+            int[,] pass1 = new int[original.GetLength(0), original.GetLength(1)];
+            int[,] pass2 = new int[original.GetLength(0), original.GetLength(1)];
 
             for (int x = 0; x < original.GetLength(0); x++)
                 for (int y = 0; y < original.GetLength(1); y++)
                 {
-                    double[] value = new double[3];
+                    double value = 0;
                     for (int i = kernelX.Length - 1; i >= 0; i--)
                     {
                         // current pixel, extrapolate if necessary
                         int pxx = Math.Max(Math.Min(x + i - kernelX.Length / 2, original.GetLength(0) - 1), 0);
 
-                        value[0] += kernelX[i] * original[pxx, y].R;
-                        value[1] += kernelX[i] * original[pxx, y].G;
-                        value[2] += kernelX[i] * original[pxx, y].B;
+                        value += kernelX[i] * original[pxx, y];
                     }
-                    for (int i = 0; i < value.Length; i++)
-                        value[i] = Math.Max(Math.Min(value[i], 255), 0);
-
-                    pass1[x, y] = Color.FromArgb((byte)Math.Round(value[0]), (byte)Math.Round(value[1]), (byte)Math.Round(value[2]));
+                    pass1[x, y] = (byte)Math.Round(Math.Max(Math.Min(value, 255), 0));
                 }
 
             for (int x = 0; x < original.GetLength(0); x++)
                 for (int y = 0; y < original.GetLength(1); y++)
                 {
-                    double[] value = new double[3];
+                    double value = 0;
                     for (int i = kernelX.Length - 1; i >= 0; i--)
                     {
                         // current pixel, extrapolate if necessary
                         int pxy = Math.Max(Math.Min(y + i - kernelY.Length / 2, original.GetLength(1) - 1), 0);
 
-                        value[0] += kernelX[i] * pass1[x, pxy].R;
-                        value[1] += kernelX[i] * pass1[x, pxy].G;
-                        value[2] += kernelX[i] * pass1[x, pxy].B;
+                        value += kernelY[i] * original[x, pxy];
                     }
-                    for (int i = 0; i < value.Length; i++)
-                        value[i] = Math.Max(Math.Min(value[i], 255), 0);
-
-                    pass2[x, y] = Color.FromArgb((byte)Math.Round(value[0]), (byte)Math.Round(value[1]), (byte)Math.Round(value[2]));
+                    pass2[x, y] = (byte)Math.Round(Math.Max(Math.Min(value, 255), 0));
                 }
 
             return pass2;

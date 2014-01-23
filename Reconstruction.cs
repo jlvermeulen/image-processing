@@ -6,29 +6,29 @@ namespace INFOIBV
 {
     public static partial class Operations
     {
-        public static Color[,] Reconstruction(Color[,] markers, Color[,] mask)
+        public static int[,] Reconstruction(int[,] markers, int[,] mask)
         {
-            Color[,] result = new Color[markers.GetLength(0), markers.GetLength(1)];
+            int[,] result = new int[markers.GetLength(0), markers.GetLength(1)];
 
             DMaxHeap<Pixel> heap = new DMaxHeap<Pixel>(5);
 
             for (int x = 0; x < markers.GetLength(0); x++)
-                for (int y = 0; y < markers.GetLength(0); y++)
+                for (int y = 0; y < markers.GetLength(1); y++)
                 {
-                    if (markers[x, y].R > 0 && mask[x, y].R > 0)
+                    if (markers[x, y] > 0 && mask[x, y] > 0)
                     {
-                        Pixel p = new Pixel(x, y, Math.Min(markers[x, y].R, mask[x, y].R));
+                        Pixel p = new Pixel(x, y, Math.Min(markers[x, y], mask[x, y]));
                         heap.Add(p);
                     }
-                    result[x, y] = Color.Black;
+                    result[x, y] = 0;
                 }
 
             while (heap.Count > 0)
             {
                 Pixel p = heap.Extract();
-                if (p.Value <= result[p.X, p.Y].R)
+                if (p.Value <= result[p.X, p.Y])
                     continue;
-                result[p.X, p.Y] = Color.FromArgb(p.Value, p.Value, p.Value);
+                result[p.X, p.Y] = p.Value;
 
                 for (int i = -1; i <= 1; i++)
                     for (int j = -1; j <= 1; j++)
@@ -38,8 +38,8 @@ namespace INFOIBV
                         if (pxx < 0 || pxx >= markers.GetLength(0) || pxy < 0 || pxy >= markers.GetLength(1))
                             continue;
 
-                        byte val = Math.Min(mask[pxx, pxy].R, p.Value);
-                        if (val == result[pxx, pxy].R)
+                        int val = Math.Min(mask[pxx, pxy], p.Value);
+                        if (val == result[pxx, pxy])
                             continue;
 
                         heap.Add(new Pixel(pxx, pxy, val));
@@ -52,9 +52,9 @@ namespace INFOIBV
         private struct Pixel : IComparable<Pixel>
         {
             public int X, Y;
-            public byte Value;
+            public int Value;
 
-            public Pixel(int x, int y, byte value) { this.X = x; this.Y = y; this.Value = value; }
+            public Pixel(int x, int y, int value) { this.X = x; this.Y = y; this.Value = value; }
 
             public int CompareTo(Pixel other) { return this.Value.CompareTo(other.Value); }
         }

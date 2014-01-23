@@ -6,14 +6,14 @@ namespace INFOIBV
 {
     public static partial class Operations
     {
-        public static int[,] DistanceTransform(Color[,] image)
+        public static int[,] DistanceTransform(int[,] image)
         {
             int[,] dt = new int[image.GetLength(0), image.GetLength(1)];
 
             for (int y = 0; y < image.GetLength(1); y++)
                 for (int x = 0; x < image.GetLength(0); x++)
                 {
-                    dt[x, y] = (image[x, y].R == 0 ? 0 : int.MaxValue - 2);
+                    dt[x, y] = (image[x, y] == 0 ? 0 : int.MaxValue - 2);
 
                     if (x > 0 && y > 0)
                         dt[x, y] = Math.Min(dt[x - 1, y - 1] + 2, dt[x, y]);
@@ -97,7 +97,7 @@ namespace INFOIBV
             return maxima;
         }
 
-        public static bool[,] Watershed(Color[,] image, decimal threshold)
+        public static bool[,] Watershed(int[,] image, decimal threshold)
         {
             bool[,] shed = new bool[image.GetLength(0), image.GetLength(1)];
             int[,] dt = DistanceTransform(image), dt2 = new int[dt.GetLength(0), dt.GetLength(1)];

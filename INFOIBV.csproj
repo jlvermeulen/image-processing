@@ -50,7 +50,7 @@
     <Compile Include="Convolution.cs" />
     <Compile Include="Dilation.cs" />
     <Compile Include="Erosion.cs" />
-    <Compile Include="Grayscale.cs" />
+    <Compile Include="Conversions.cs" />
     <Compile Include="Reconstruction.cs" />
     <Compile Include="Heap.cs" />
     <Compile Include="Main.cs">

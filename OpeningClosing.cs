@@ -5,33 +5,33 @@ namespace INFOIBV
 {
     public static partial class Operations
     {
-        public static Color[,] Opening(Color[,] original, bool[,] structuringElement)
+        public static int[,] Opening(int[,] original, bool[,] structuringElement)
         {
-            Color[,] result;
+            int[,] result;
             result = Erosion(original, structuringElement);
             result = Dilation(result, structuringElement);
             return result;
         }
 
-        public static Color[,] Closing(Color[,] original, bool[,] structuringElement)
+        public static int[,] Closing(int[,] original, bool[,] structuringElement)
         {
-            Color[,] result;
+            int[,] result;
             result = Dilation(original, structuringElement);
             result = Erosion(result, structuringElement);
             return result;
         }
 
-        public static Color[,] OpeningByReconstruction(Color[,] original, bool[,] structuringElement)
+        public static int[,] OpeningByReconstruction(int[,] original, bool[,] structuringElement)
         {
-            Color[,] result;
+            int[,] result;
             result = Erosion(original, structuringElement);
             result = Reconstruction(result, original);
             return result;
         }
 
-        public static Color[,] OpeningByReconstruction(Color[,] original, bool[] structuringElementX, bool[] structuringElementY)
+        public static int[,] OpeningByReconstruction(int[,] original, bool[] structuringElementX, bool[] structuringElementY)
         {
-            Color[,] result;
+            int[,] result;
             result = Erosion(original, structuringElementX, structuringElementY);
             result = Reconstruction(result, original);
             return result;
