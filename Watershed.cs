@@ -47,38 +47,7 @@ namespace INFOIBV
 
         public static List<Tuple<int, int>> GetLocalMaxima(int[,] dt)
         {
-            UnionFind<Tuple<int, int>> unionFind = new UnionFind<Tuple<int, int>>();
-            for (int x = 0; x < dt.GetLength(0); x++)
-                for (int y = 0; y < dt.GetLength(1); y++)
-                {
-                    if (dt[x, y] == 0)
-                        continue;
-
-                    Tuple<int, int> xy = new Tuple<int, int>(x, y);
-                    unionFind.Make(xy);
-                    if (x > 0)
-                        unionFind.Union(xy, new Tuple<int, int>(x - 1, y));
-                    if (y > 0)
-                        unionFind.Union(xy, new Tuple<int, int>(x, y - 1));
-                }
-
-            Dictionary<Tuple<int, int>, List<Tuple<int, int>>> sets = new Dictionary<Tuple<int, int>, List<Tuple<int, int>>>();
-
-            for (int x = 0; x < dt.GetLength(0); x++)
-                for (int y = 0; y < dt.GetLength(1); y++)
-                {
-                    if (dt[x, y] == 0)
-                        continue;
-
-                    Tuple<int, int> xy = new Tuple<int, int>(x, y), set = unionFind.Find(xy);
-                    List<Tuple<int, int>> list;
-                    if (!sets.TryGetValue(set, out list))
-                    {
-                        list = new List<Tuple<int, int>>();
-                        sets[set] = list;
-                    }
-                    list.Add(xy);
-                }
+            Dictionary<Tuple<int, int>, List<Tuple<int, int>>> sets = Operations.Groups(dt);
 
             List<Tuple<int, int>> maxima = new List<Tuple<int,int>>();
             foreach (List<Tuple<int, int>> set in sets.Values)

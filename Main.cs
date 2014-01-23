@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace INFOIBV
 {
@@ -11,6 +11,7 @@ namespace INFOIBV
         private Bitmap outputImage;
         private int currentStep = 0;
         private int[,] prevData, data;
+        private Dictionary<Tuple<int, int>, List<Tuple<int, int>>> groups;
 
         public INFOIBV()
         {
@@ -83,17 +84,16 @@ namespace INFOIBV
                     this.data = Operations.Mask(this.prevData, Operations.Watershed(this.prevData, shedThresh.Value));
                     break;
 
+                case 5:
+                    this.groups = Operations.Groups(this.prevData);
+                    this.data = Operations.Label(this.groups, this.prevData.GetLength(0), this.prevData.GetLength(1));
+                    break;
+
                 default:
                     break;
             }
 
             this.outputImageBox.Image = this.outputImage = Operations.CreateImage(this.data);
-
-            //int[,] greyValues = Operations.ConvertToGreyscale(image);
-            //int[,] smoothed = Operations.Convolution(greyValues, SmoothingKernel1D, SmoothingKernel1D);
-            //int[,] thresh = Operations.WindowSlicing(smoothed, 0, 180);
-            //int[,] opening = Operations.OpeningByReconstruction(thresh, new bool[,] { { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true } });
-            //int[,] shed = Operations.Mask(opening, Operations.Watershed(opening, 0.6m));
         }
     }
 }
