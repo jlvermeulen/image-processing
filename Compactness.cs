@@ -5,12 +5,12 @@ namespace INFOIBV
 {
     public static partial class Operations
     {
-        public static string Perimeter(bool[,] image, int x, int y)
+        public static string Perimeter(int[,] image, int x, int y)
         {
             int w = image.GetLength(0) - 1, h = image.GetLength(1) - 1;
-            while (image[x, y] && x > 0)
+            while (image[x, y] != 0 && x > 0)
                 x--;
-            if (!image[x, y])
+            if (image[x, y] == 0)
                 x++;
 
             StringBuilder builder = new StringBuilder();
@@ -18,7 +18,7 @@ namespace INFOIBV
             do
             {
                 direction = (direction + 3) % 4;
-                bool[] mayGoDirection = new bool[] { y > 0 && image[x, y - 1], x < w && image[x + 1, y], y < h && image[x, y + 1], x > 0 && image[x - 1, y] };
+                bool[] mayGoDirection = new bool[] { y > 0 && image[x, y - 1] != 0, x < w && image[x + 1, y] != 0, y < h && image[x, y + 1] != 0, x > 0 && image[x - 1, y] != 0 };
                 for (int i = 0; i < 4; i++)
                 {
                     if (mayGoDirection[(direction + i) % 4])
@@ -59,7 +59,7 @@ namespace INFOIBV
             return area;
         }
 
-        public static double Compactness(bool[,] image, int x, int y)
+        public static double Compactness(int[,] image, int x, int y)
         {
             string perimeter = Perimeter(image, x, y);
             int area = Area(perimeter);

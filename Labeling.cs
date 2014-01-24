@@ -10,11 +10,12 @@ namespace INFOIBV
             int[,] result = new int[image.GetLength(0), image.GetLength(1)];
             Dictionary<Tuple<int, int>, List<Tuple<int, int>>> labels = Groups(image);
 
-            int step = 200 / labels.Count, i = 1;
+            double step = 200.0 / labels.Count;
+            int i = 1;
             foreach (List<Tuple<int, int>> set in labels.Values)
             {
                 foreach (Tuple<int, int> p in set)
-                    result[p.Item1, p.Item2] = 50 + i * step;
+                    result[p.Item1, p.Item2] = 50 + (int)(i * step);
                 i++;
             }
 
@@ -25,11 +26,12 @@ namespace INFOIBV
         {
             int[,] result = new int[width, height];
 
-            int step = 200 / labels.Count, i = 1;
+            double step = 200.0 / labels.Count;
+            int i = 1;
             foreach (List<Tuple<int, int>> set in labels.Values)
             {
                 foreach (Tuple<int, int> p in set)
-                    result[p.Item1, p.Item2] = 50 + i * step;
+                    result[p.Item1, p.Item2] = 50 + (int)(i * step);
                 i++;
             }
 

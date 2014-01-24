@@ -44,6 +44,8 @@
             this.lowerThresh = new System.Windows.Forms.NumericUpDown();
             this.upperThresh = new System.Windows.Forms.NumericUpDown();
             this.shedThresh = new System.Windows.Forms.NumericUpDown();
+            this.minComp = new System.Windows.Forms.NumericUpDown();
+            this.maxComp = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.inputImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.red)).BeginInit();
@@ -52,6 +54,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.lowerThresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upperThresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.shedThresh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minComp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxComp)).BeginInit();
             this.SuspendLayout();
             // 
             // LoadImageButton
@@ -131,6 +135,7 @@
             this.skip.TabIndex = 7;
             this.skip.Text = "Apply all";
             this.skip.UseVisualStyleBackColor = true;
+            this.skip.Click += new System.EventHandler(this.skip_Click);
             // 
             // apply
             // 
@@ -263,11 +268,49 @@
             0,
             65536});
             // 
+            // minComp
+            // 
+            this.minComp.DecimalPlaces = 2;
+            this.minComp.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.minComp.Location = new System.Drawing.Point(1050, 303);
+            this.minComp.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.minComp.Name = "minComp";
+            this.minComp.Size = new System.Drawing.Size(75, 20);
+            this.minComp.TabIndex = 15;
+            // 
+            // maxComp
+            // 
+            this.maxComp.DecimalPlaces = 2;
+            this.maxComp.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.maxComp.Location = new System.Drawing.Point(1131, 303);
+            this.maxComp.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.maxComp.Name = "maxComp";
+            this.maxComp.Size = new System.Drawing.Size(75, 20);
+            this.maxComp.TabIndex = 16;
+            // 
             // INFOIBV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1306, 568);
+            this.Controls.Add(this.maxComp);
+            this.Controls.Add(this.minComp);
             this.Controls.Add(this.shedThresh);
             this.Controls.Add(this.upperThresh);
             this.Controls.Add(this.lowerThresh);
@@ -295,6 +338,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.lowerThresh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upperThresh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.shedThresh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minComp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxComp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -318,6 +363,8 @@
         private System.Windows.Forms.NumericUpDown lowerThresh;
         private System.Windows.Forms.NumericUpDown upperThresh;
         private System.Windows.Forms.NumericUpDown shedThresh;
+        private System.Windows.Forms.NumericUpDown minComp;
+        private System.Windows.Forms.NumericUpDown maxComp;
 
     }
 }

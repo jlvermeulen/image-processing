@@ -51,6 +51,7 @@
     <Compile Include="Dilation.cs" />
     <Compile Include="Erosion.cs" />
     <Compile Include="Conversions.cs" />
+    <Compile Include="Filtering.cs" />
     <Compile Include="Labeling.cs" />
     <Compile Include="Reconstruction.cs" />
     <Compile Include="Heap.cs" />

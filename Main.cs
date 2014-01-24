@@ -7,11 +7,13 @@ namespace INFOIBV
 {
     public partial class INFOIBV : Form
     {
+        const int STEPS = 6;
+
         private Bitmap inputImage;
         private Bitmap outputImage;
-        private int currentStep = 0;
+        private int currentStep = 0, inputStep = 0;
         private int[,] prevData, data;
-        private Dictionary<Tuple<int, int>, List<Tuple<int, int>>> groups;
+        private Dictionary<Tuple<int, int>, List<Tuple<int, int>>> groups, filtered;
 
         public INFOIBV()
         {
@@ -31,7 +33,14 @@ namespace INFOIBV
                     this.inputImage.Size.Height > 512 || this.inputImage.Size.Width > 512) // Dimension check
                     MessageBox.Show("Error in image dimensions (have to be > 0 and <= 512)");
                 else
+                {
                     this.inputImageBox.Image = this.inputImage; // Display input image
+                    this.currentStep = this.inputStep = 0;
+                    this.prevData = this.data = null;
+                    this.groups = this.filtered = null;
+                    this.outputImage = null;
+                    this.outputImageBox.Image = null;
+                }
             }
         }
         
@@ -45,12 +54,17 @@ namespace INFOIBV
 
         private void step_Click(object sender, EventArgs e)
         {
+            if (currentStep >= STEPS)
+                return;
+
             this.inputImage.Dispose();
             this.inputImageBox.Image = this.inputImage = this.outputImage;
             this.outputImageBox.Image = this.outputImage = null;
 
             this.prevData = this.data;
+            this.groups = this.filtered;
 
+            this.inputStep++;
             this.currentStep++;
         }
 
@@ -85,8 +99,13 @@ namespace INFOIBV
                     break;
 
                 case 5:
-                    this.groups = Operations.Groups(this.prevData);
+                    this.groups = this.filtered = Operations.Groups(this.prevData);
                     this.data = Operations.Label(this.groups, this.prevData.GetLength(0), this.prevData.GetLength(1));
+                    break;
+
+                case 6:
+                    this.filtered = Operations.FilterByCompactness(this.prevData, this.groups, (double)minComp.Value, (double)maxComp.Value);
+                    this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
                     break;
 
                 default:
@@ -94,6 +113,18 @@ namespace INFOIBV
             }
 
             this.outputImageBox.Image = this.outputImage = Operations.CreateImage(this.data);
+        }
+
+        private void skip_Click(object sender, EventArgs e)
+        {
+            do
+            {
+                this.apply.PerformClick();
+                this.prevData = this.data;
+            }
+            while (currentStep++ < STEPS);
+
+            this.currentStep = this.inputStep;
         }
     }
 }
