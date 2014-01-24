@@ -83,28 +83,32 @@ namespace INFOIBV
                     break;
 
                 case 1:
-                    this.data = Operations.Convolution(this.prevData, new double[] { 1 }, new double[] { 1 });
-                    break;
-
-                case 2:
                     this.data = Operations.WindowSlicing(this.prevData, (int)lowerThresh.Value, (int)upperThresh.Value);
                     break;
 
-                case 3:
-                    this.data = Operations.OpeningByReconstruction(this.prevData, new bool[,] { { true, true, true }, { true, true, true }, { true, true, true } });
+                case 2:
+                    this.data = Operations.OpeningByReconstruction(this.prevData, Square5x5);
+                    this.data = Operations.Invert(this.data);
+                    this.data = Operations.OpeningByReconstruction(this.data, Square5x5);
+                    this.data = Operations.Invert(this.data);
                     break;
 
-                case 4:
+                case 3:
                     this.data = Operations.Mask(this.prevData, Operations.Watershed(this.prevData, shedThresh.Value));
                     break;
 
-                case 5:
+                case 4:
                     this.groups = this.filtered = Operations.Groups(this.prevData);
                     this.data = Operations.Label(this.groups, this.prevData.GetLength(0), this.prevData.GetLength(1));
                     break;
 
-                case 6:
+                case 5:
                     this.filtered = Operations.FilterByCompactness(this.prevData, this.groups, (double)minComp.Value, (double)maxComp.Value);
+                    this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
+                    break;
+
+                case 6:
+                    this.filtered = Operations.FilterByArea(this.prevData, this.filtered, (int)minArea.Value, (int)maxArea.Value);
                     this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
                     break;
 
@@ -126,5 +130,7 @@ namespace INFOIBV
 
             this.currentStep = this.inputStep;
         }
+
+        private bool[,] Square5x5 = new bool[,] { { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true } };
     }
 }

@@ -19,5 +19,20 @@ namespace INFOIBV
 
             return filtered;
         }
+
+        public static Dictionary<Tuple<int, int>, List<Tuple<int, int>>> FilterByArea(int[,] image, Dictionary<Tuple<int, int>, List<Tuple<int, int>>> objects, int min, int max)
+        {
+            Dictionary<Tuple<int, int>, List<Tuple<int, int>>> filtered = new Dictionary<Tuple<int, int>, List<Tuple<int, int>>>();
+
+            foreach (KeyValuePair<Tuple<int, int>, List<Tuple<int, int>>> kvp in objects)
+            {
+                int area = Operations.Area(Operations.Perimeter(image, kvp.Key.Item1, kvp.Key.Item2));
+
+                if (area >= min && area <= max)
+                    filtered[kvp.Key] = kvp.Value;
+            }
+
+            return filtered;
+        }
     }
 }

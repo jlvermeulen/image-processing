@@ -50,5 +50,16 @@ namespace INFOIBV
 
             return result;
         }
+
+        public static int[,] Invert(int[,] values)
+        {
+            int[,] result = new int[values.GetLength(0), values.GetLength(1)];
+
+            for (int x = 0; x < result.GetLength(0); x++)
+                for (int y = 0; y < result.GetLength(1); y++)
+                    result[x, y] = 255 - values[x, y];
+
+            return result;
+        }
     }
 }
