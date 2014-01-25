@@ -129,6 +129,7 @@ namespace INFOIBV
                 case 7:
                     this.filtered = Operations.FilterByConvexity(this.prevData, this.groups, (double)minConv.Value, (double)maxConv.Value);
                     this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
+
                     break;
 
                 default:
@@ -144,6 +145,9 @@ namespace INFOIBV
             if (this.inputImage == null)
                 return;
 
+            int[,] startData = this.prevData;
+            Dictionary<Tuple<int, int>, List<Tuple<int, int>>> startGroups = this.groups;
+
             do
             {
                 this.apply.PerformClick();
@@ -154,6 +158,8 @@ namespace INFOIBV
 
             this.currentStep = this.inputStep;
             this.applied = false;
+            this.prevData = startData;
+            this.groups = startGroups;
         }
 
         private bool[,] MakeStructuringElement(int size, string type)

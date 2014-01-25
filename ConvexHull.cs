@@ -82,8 +82,8 @@ namespace INFOIBV
         public static double PolygonArea(List<Tuple<int, int>> polygon)
         {
             double area = 0;
-            for (int i = 0; i < polygon.Count - 1; i++)
-                area += polygon[i].Item1 * polygon[i + 1].Item2 - polygon[i + 1].Item1 * polygon[i].Item2;
+            for (int i = 0; i < polygon.Count; i++)
+                area += polygon[i].Item1 * polygon[(i + 1) % polygon.Count].Item2 - polygon[(i + 1) % polygon.Count].Item1 * polygon[i].Item2;
             return area / 2;
         }
 
