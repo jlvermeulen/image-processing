@@ -163,7 +163,7 @@
             this.step.Location = new System.Drawing.Point(1049, 528);
             this.step.Name = "step";
             this.step.Size = new System.Drawing.Size(80, 29);
-            this.step.TabIndex = 19;
+            this.step.TabIndex = 12;
             this.step.Text = "Next step";
             this.step.UseVisualStyleBackColor = true;
             this.step.Click += new System.EventHandler(this.step_Click);
@@ -173,7 +173,7 @@
             this.skip.Location = new System.Drawing.Point(1219, 528);
             this.skip.Name = "skip";
             this.skip.Size = new System.Drawing.Size(80, 29);
-            this.skip.TabIndex = 21;
+            this.skip.TabIndex = 14;
             this.skip.Text = "Apply all";
             this.skip.UseVisualStyleBackColor = true;
             this.skip.Click += new System.EventHandler(this.skip_Click);
@@ -183,7 +183,7 @@
             this.apply.Location = new System.Drawing.Point(1134, 528);
             this.apply.Name = "apply";
             this.apply.Size = new System.Drawing.Size(80, 29);
-            this.apply.TabIndex = 20;
+            this.apply.TabIndex = 13;
             this.apply.Text = "Apply step";
             this.apply.UseVisualStyleBackColor = true;
             this.apply.Click += new System.EventHandler(this.apply_Click);
@@ -204,7 +204,7 @@
             0});
             this.red.Name = "red";
             this.red.Size = new System.Drawing.Size(75, 20);
-            this.red.TabIndex = 5;
+            this.red.TabIndex = 1;
             this.red.Value = new decimal(new int[] {
             2126,
             0,
@@ -227,7 +227,7 @@
             0});
             this.green.Name = "green";
             this.green.Size = new System.Drawing.Size(75, 20);
-            this.green.TabIndex = 6;
+            this.green.TabIndex = 2;
             this.green.Value = new decimal(new int[] {
             7152,
             0,
@@ -250,7 +250,7 @@
             0});
             this.blue.Name = "blue";
             this.blue.Size = new System.Drawing.Size(75, 20);
-            this.blue.TabIndex = 7;
+            this.blue.TabIndex = 3;
             this.blue.Value = new decimal(new int[] {
             722,
             0,
@@ -267,7 +267,7 @@
             0});
             this.lowerThresh.Name = "lowerThresh";
             this.lowerThresh.Size = new System.Drawing.Size(75, 20);
-            this.lowerThresh.TabIndex = 8;
+            this.lowerThresh.TabIndex = 1;
             // 
             // upperThresh
             // 
@@ -279,7 +279,7 @@
             0});
             this.upperThresh.Name = "upperThresh";
             this.upperThresh.Size = new System.Drawing.Size(75, 20);
-            this.upperThresh.TabIndex = 9;
+            this.upperThresh.TabIndex = 2;
             this.upperThresh.Value = new decimal(new int[] {
             180,
             0,
@@ -302,7 +302,7 @@
             0});
             this.shedThresh.Name = "shedThresh";
             this.shedThresh.Size = new System.Drawing.Size(75, 20);
-            this.shedThresh.TabIndex = 12;
+            this.shedThresh.TabIndex = 1;
             this.shedThresh.Value = new decimal(new int[] {
             1,
             0,
@@ -325,7 +325,7 @@
             0});
             this.minComp.Name = "minComp";
             this.minComp.Size = new System.Drawing.Size(75, 20);
-            this.minComp.TabIndex = 13;
+            this.minComp.TabIndex = 1;
             // 
             // maxComp
             // 
@@ -343,7 +343,7 @@
             0});
             this.maxComp.Name = "maxComp";
             this.maxComp.Size = new System.Drawing.Size(75, 20);
-            this.maxComp.TabIndex = 14;
+            this.maxComp.TabIndex = 2;
             this.maxComp.Value = new decimal(new int[] {
             6,
             0,
@@ -360,7 +360,7 @@
             0});
             this.minArea.Name = "minArea";
             this.minArea.Size = new System.Drawing.Size(75, 20);
-            this.minArea.TabIndex = 15;
+            this.minArea.TabIndex = 1;
             // 
             // maxArea
             // 
@@ -372,7 +372,7 @@
             0});
             this.maxArea.Name = "maxArea";
             this.maxArea.Size = new System.Drawing.Size(75, 20);
-            this.maxArea.TabIndex = 16;
+            this.maxArea.TabIndex = 2;
             this.maxArea.Value = new decimal(new int[] {
             10000,
             0,
@@ -390,7 +390,7 @@
             this.groupBox1.Location = new System.Drawing.Point(1049, 45);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(250, 63);
-            this.groupBox1.TabIndex = 19;
+            this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Grayscale conversion";
             // 
@@ -400,7 +400,7 @@
             this.label3.Location = new System.Drawing.Point(84, 19);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 13);
-            this.label3.TabIndex = 14;
+            this.label3.TabIndex = 24;
             this.label3.Text = "Green weight";
             // 
             // label2
@@ -409,7 +409,7 @@
             this.label2.Location = new System.Drawing.Point(165, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(62, 13);
-            this.label2.TabIndex = 13;
+            this.label2.TabIndex = 25;
             this.label2.Text = "Blue weight";
             // 
             // label1
@@ -418,7 +418,7 @@
             this.label1.Location = new System.Drawing.Point(3, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 13);
-            this.label1.TabIndex = 12;
+            this.label1.TabIndex = 23;
             this.label1.Text = "Red weight";
             // 
             // groupBox2
@@ -430,7 +430,7 @@
             this.groupBox2.Location = new System.Drawing.Point(1049, 114);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(250, 63);
-            this.groupBox2.TabIndex = 20;
+            this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Window slicing";
             // 
@@ -440,7 +440,7 @@
             this.label5.Location = new System.Drawing.Point(84, 19);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(27, 13);
-            this.label5.TabIndex = 15;
+            this.label5.TabIndex = 28;
             this.label5.Text = "Max";
             // 
             // label4
@@ -449,7 +449,7 @@
             this.label4.Location = new System.Drawing.Point(3, 19);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 13);
-            this.label4.TabIndex = 14;
+            this.label4.TabIndex = 27;
             this.label4.Text = "Min";
             // 
             // groupBox3
@@ -459,7 +459,7 @@
             this.groupBox3.Location = new System.Drawing.Point(1049, 252);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(250, 63);
-            this.groupBox3.TabIndex = 21;
+            this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Watershed";
             // 
@@ -469,7 +469,7 @@
             this.label6.Location = new System.Drawing.Point(3, 19);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(72, 13);
-            this.label6.TabIndex = 15;
+            this.label6.TabIndex = 33;
             this.label6.Text = "DT Threshold";
             // 
             // groupBox4
@@ -481,7 +481,7 @@
             this.groupBox4.Location = new System.Drawing.Point(1049, 321);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(250, 63);
-            this.groupBox4.TabIndex = 22;
+            this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Compactness filter";
             // 
@@ -491,7 +491,7 @@
             this.label7.Location = new System.Drawing.Point(84, 19);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(27, 13);
-            this.label7.TabIndex = 17;
+            this.label7.TabIndex = 36;
             this.label7.Text = "Max";
             // 
             // label8
@@ -500,7 +500,7 @@
             this.label8.Location = new System.Drawing.Point(3, 19);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(24, 13);
-            this.label8.TabIndex = 16;
+            this.label8.TabIndex = 35;
             this.label8.Text = "Min";
             // 
             // groupBox5
@@ -512,7 +512,7 @@
             this.groupBox5.Location = new System.Drawing.Point(1049, 390);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(250, 63);
-            this.groupBox5.TabIndex = 23;
+            this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Area filter";
             // 
@@ -543,7 +543,7 @@
             this.groupBox6.Location = new System.Drawing.Point(1049, 183);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(250, 63);
-            this.groupBox6.TabIndex = 24;
+            this.groupBox6.TabIndex = 7;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Opening by reconstruction";
             // 
@@ -553,7 +553,7 @@
             this.label12.Location = new System.Drawing.Point(84, 19);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(31, 13);
-            this.label12.TabIndex = 3;
+            this.label12.TabIndex = 31;
             this.label12.Text = "Type";
             // 
             // label11
@@ -562,7 +562,7 @@
             this.label11.Location = new System.Drawing.Point(3, 19);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(27, 13);
-            this.label11.TabIndex = 2;
+            this.label11.TabIndex = 30;
             this.label11.Text = "Size";
             // 
             // structType
@@ -576,7 +576,7 @@
             this.structType.Location = new System.Drawing.Point(87, 35);
             this.structType.Name = "structType";
             this.structType.Size = new System.Drawing.Size(75, 21);
-            this.structType.TabIndex = 11;
+            this.structType.TabIndex = 2;
             this.structType.Text = "Square";
             // 
             // structSize
@@ -599,7 +599,7 @@
             0});
             this.structSize.Name = "structSize";
             this.structSize.Size = new System.Drawing.Size(75, 20);
-            this.structSize.TabIndex = 10;
+            this.structSize.TabIndex = 1;
             this.structSize.Value = new decimal(new int[] {
             5,
             0,
@@ -615,7 +615,7 @@
             this.groupBox7.Location = new System.Drawing.Point(1049, 459);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(250, 63);
-            this.groupBox7.TabIndex = 23;
+            this.groupBox7.TabIndex = 11;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Convexity filter";
             // 
@@ -625,7 +625,7 @@
             this.label13.Location = new System.Drawing.Point(84, 19);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(27, 13);
-            this.label13.TabIndex = 17;
+            this.label13.TabIndex = 40;
             this.label13.Text = "Max";
             // 
             // minConv
@@ -644,7 +644,7 @@
             0});
             this.minConv.Name = "minConv";
             this.minConv.Size = new System.Drawing.Size(75, 20);
-            this.minConv.TabIndex = 17;
+            this.minConv.TabIndex = 1;
             // 
             // label14
             // 
@@ -652,7 +652,7 @@
             this.label14.Location = new System.Drawing.Point(3, 19);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(24, 13);
-            this.label14.TabIndex = 16;
+            this.label14.TabIndex = 39;
             this.label14.Text = "Min";
             // 
             // maxConv
@@ -671,7 +671,7 @@
             0});
             this.maxConv.Name = "maxConv";
             this.maxConv.Size = new System.Drawing.Size(75, 20);
-            this.maxConv.TabIndex = 18;
+            this.maxConv.TabIndex = 2;
             this.maxConv.Value = new decimal(new int[] {
             1,
             0,

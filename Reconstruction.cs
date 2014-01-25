@@ -6,12 +6,14 @@ namespace INFOIBV
 {
     public static partial class Operations
     {
+        // geodesic dilation from markers
         public static int[,] Reconstruction(int[,] markers, int[,] mask)
         {
             int[,] result = new int[markers.GetLength(0), markers.GetLength(1)];
 
             DMaxHeap<Pixel> heap = new DMaxHeap<Pixel>(5);
 
+            // add markers to heap
             for (int x = 0; x < markers.GetLength(0); x++)
                 for (int y = 0; y < markers.GetLength(1); y++)
                 {
@@ -23,23 +25,25 @@ namespace INFOIBV
                     result[x, y] = 0;
                 }
 
+            // process heap in order of value
             while (heap.Count > 0)
             {
                 Pixel p = heap.Extract();
-                if (p.Value <= result[p.X, p.Y])
+                if (p.Value <= result[p.X, p.Y]) // not a higher value than already determined
                     continue;
                 result[p.X, p.Y] = p.Value;
 
+                // add neighbours
                 for (int i = -1; i <= 1; i++)
                     for (int j = -1; j <= 1; j++)
                     {
                         int pxx = p.X + i, pxy = p.Y + j;
 
-                        if (pxx < 0 || pxx >= markers.GetLength(0) || pxy < 0 || pxy >= markers.GetLength(1))
+                        if (pxx < 0 || pxx >= markers.GetLength(0) || pxy < 0 || pxy >= markers.GetLength(1)) // no pixel
                             continue;
 
                         int val = Math.Min(mask[pxx, pxy], p.Value);
-                        if (val == result[pxx, pxy])
+                        if (val == result[pxx, pxy]) // no loops of pixels adding each other
                             continue;
 
                         heap.Add(new Pixel(pxx, pxy, val));

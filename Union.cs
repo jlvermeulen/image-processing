@@ -5,6 +5,7 @@ namespace INFOIBV
 {
     public static partial class Operations
     {
+        // union of two greyscale images
         public static int[,] Union(int[,] one, int[,] two)
         {
             int[,] result = new int[one.GetLength(0), one.GetLength(1)];
@@ -19,6 +20,7 @@ namespace INFOIBV
             return result;
         }
 
+        // union of multiple greyscale images
         public static int[,] Union(int[][,] images)
         {
             int[,] result = new int[images[0].GetLength(0), images[0].GetLength(1)];
@@ -35,6 +37,7 @@ namespace INFOIBV
             return result;
         }
 
+        // mask a greyscale image
         public static int[,] Mask(int[,] image, bool[,] mask)
         {
             int[,] result = new int[image.GetLength(0), image.GetLength(1)];

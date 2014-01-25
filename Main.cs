@@ -39,6 +39,8 @@ namespace INFOIBV
                 else
                 {
                     this.inputImageBox.Image = this.inputImage; // Display input image
+
+                    // reset state
                     this.currentStep = this.inputStep = 0;
                     this.prevData = this.data = null;
                     this.groups = this.filtered = null;
@@ -57,27 +59,30 @@ namespace INFOIBV
                 this.outputImage.Save(this.saveImageDialog.FileName);
         }
 
+        // move to next step
         private void step_Click(object sender, EventArgs e)
         {
             if (currentStep >= STEPS || this.inputImage == null)
                 return;
 
-            if (!this.applied)
+            if (!this.applied) // apply current step before moving on to the next one
                 this.apply.PerformClick();
 
+            // move image
             this.inputImage.Dispose();
             this.inputImageBox.Image = this.inputImage = this.outputImage;
             this.outputImageBox.Image = this.outputImage = null;
 
+            // move data
             this.prevData = this.data;
             this.groups = this.filtered;
 
             this.inputStep++;
             this.currentStep++;
-
             this.applied = false;
         }
 
+        // apply current step with current settings
         private void apply_Click(object sender, EventArgs e)
         {
             if (this.inputImage == null)
@@ -85,6 +90,7 @@ namespace INFOIBV
 
             switch (currentStep)
             {
+                // greyscale conversion
                 case 0:
                     Color[,] image = new Color[this.inputImage.Size.Width, this.inputImage.Size.Height]; // Create array to speed up operations (Bitmap functions are very slow)
                     // Copy input Bitmap to array            
@@ -95,10 +101,12 @@ namespace INFOIBV
                     this.data = Operations.ConvertToGreyscale(image, red.Value, green.Value, blue.Value);
                     break;
 
+                // window slicing
                 case 1:
                     this.data = Operations.WindowSlicing(this.prevData, (int)lowerThresh.Value, (int)upperThresh.Value);
                     break;
 
+                // opening by reconstruction
                 case 2:
                     bool[,] structElem = this.MakeStructuringElement((int)structSize.Value, structType.Text);
                     this.data = Operations.OpeningByReconstruction(this.prevData, structElem);
@@ -107,25 +115,30 @@ namespace INFOIBV
                     this.data = Operations.Invert(this.data);
                     break;
 
+                // watershed
                 case 3:
                     this.data = Operations.Mask(this.prevData, Operations.Watershed(this.prevData, shedThresh.Value));
                     break;
 
+                // labeling
                 case 4:
                     this.groups = this.filtered = Operations.Groups(this.prevData);
                     this.data = Operations.Label(this.groups, this.prevData.GetLength(0), this.prevData.GetLength(1));
                     break;
 
+                // filter by compactness
                 case 5:
                     this.filtered = Operations.FilterByCompactness(this.prevData, this.groups, (double)minComp.Value, (double)maxComp.Value);
                     this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
                     break;
 
+                // filter by area
                 case 6:
                     this.filtered = Operations.FilterByArea(this.prevData, this.groups, (int)minArea.Value, (int)maxArea.Value);
                     this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
                     break;
 
+                // filter by convexity
                 case 7:
                     this.filtered = Operations.FilterByConvexity(this.prevData, this.groups, (double)minConv.Value, (double)maxConv.Value);
                     this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
@@ -136,10 +149,12 @@ namespace INFOIBV
                     break;
             }
 
+            // create image from greyscale data
             this.outputImageBox.Image = this.outputImage = Operations.CreateImage(this.data);
             this.applied = true;
         }
 
+        // perform all remaining steps from current point
         private void skip_Click(object sender, EventArgs e)
         {
             if (this.inputImage == null)
@@ -148,6 +163,7 @@ namespace INFOIBV
             int[,] startData = this.prevData;
             Dictionary<Tuple<int, int>, List<Tuple<int, int>>> startGroups = this.groups;
 
+            // apply all remaining steps
             do
             {
                 this.apply.PerformClick();
@@ -156,12 +172,14 @@ namespace INFOIBV
             }
             while (currentStep++ < STEPS);
 
+            // return internal state to starting point of operation
             this.currentStep = this.inputStep;
             this.applied = false;
             this.prevData = startData;
             this.groups = startGroups;
         }
 
+        // make a structuring element for opening by reconstruction
         private bool[,] MakeStructuringElement(int size, string type)
         {
             bool[,] elem = new bool[size, size];
@@ -199,6 +217,7 @@ namespace INFOIBV
             return elem;
         }
 
+        // load presets from file
         private void LoadPresets()
         {
             StreamReader reader = new StreamReader("Presets.txt");
@@ -216,6 +235,7 @@ namespace INFOIBV
             this.preset.Items.AddRange(names.ToArray());
         }
 
+        // apply preset
         private void preset_SelectedIndexChanged(object sender, EventArgs e)
         {
             string[] settings = this.presets[(string)this.preset.SelectedItem];
@@ -235,6 +255,7 @@ namespace INFOIBV
             this.maxConv.Value = decimal.Parse(settings[13]);
         }
 
+        // create new preset
         private void savePreset_Click(object sender, EventArgs e)
         {
             string name = this.preset.Text;
@@ -262,6 +283,7 @@ namespace INFOIBV
             this.LoadPresets();
         }
 
+        // write presets to file
         private void WritePresets()
         {
             StreamWriter writer = new StreamWriter("Presets.txt");

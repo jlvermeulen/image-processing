@@ -6,10 +6,12 @@ namespace INFOIBV
 {
     public static partial class Operations
     {
+        // value of every pixel is the distance to the closest background pixel
         public static int[,] DistanceTransform(int[,] image)
         {
             int[,] dt = new int[image.GetLength(0), image.GetLength(1)];
 
+            // left->right, top->bottom
             for (int y = 0; y < image.GetLength(1); y++)
                 for (int x = 0; x < image.GetLength(0); x++)
                 {
@@ -27,6 +29,7 @@ namespace INFOIBV
                         dt[x, y] = Math.Min(dt[x - 1, y] + 1, dt[x, y]);
                 }
 
+            // right->left, bottom->top
             for (int y = image.GetLength(1) - 1; y >= 0; y--)
                 for (int x = image.GetLength(0) - 1; x >= 0; x--)
                 {
@@ -45,9 +48,10 @@ namespace INFOIBV
             return dt;
         }
 
+        // finds the maximum value for every cluster of object pixels
         public static List<Tuple<int, int>> GetLocalMaxima(int[,] dt)
         {
-            Dictionary<Tuple<int, int>, List<Tuple<int, int>>> sets = Operations.Groups(dt);
+            Dictionary<Tuple<int, int>, List<Tuple<int, int>>> sets = Operations.Groups(dt); // find clusters
 
             List<Tuple<int, int>> maxima = new List<Tuple<int,int>>();
             foreach (List<Tuple<int, int>> set in sets.Values)
@@ -55,7 +59,7 @@ namespace INFOIBV
                 int max = int.MinValue;
                 Tuple<int, int> maximum = null;
                 foreach (Tuple<int, int> t in set)
-                    if (dt[t.Item1, t.Item2] > max)
+                    if (dt[t.Item1, t.Item2] > max) // new max
                     {
                         max = dt[t.Item1, t.Item2];
                         maximum = t;
@@ -66,27 +70,29 @@ namespace INFOIBV
             return maxima;
         }
 
+        // separate objects that are touching
         public static bool[,] Watershed(int[,] image, decimal threshold)
         {
-            bool[,] shed = new bool[image.GetLength(0), image.GetLength(1)];
-            int[,] dt = DistanceTransform(image), dt2 = new int[dt.GetLength(0), dt.GetLength(1)];
+            bool[,] shed = new bool[image.GetLength(0), image.GetLength(1)]; // watershed mask
+            int[,] dt = DistanceTransform(image); // apply distance transform
+            int[,] dt2 = new int[dt.GetLength(0), dt.GetLength(1)];
 
+            // find global maximum
             int max = int.MinValue;
             for (int i = 0; i < dt.GetLength(0); i++)
                 for (int j = 0; j < dt.GetLength(1); j++)
                     max = Math.Max(max, dt[i, j]);
 
-            DMaxHeap<MPixel> heap = new DMaxHeap<MPixel>();
-            MPixel[,] pixels = new MPixel[dt.GetLength(0), dt.GetLength(1)];
+            MPixel[,] pixels = new MPixel[dt.GetLength(0), dt.GetLength(1)]; // pixel object for each position
 
             for (int i = 0; i < dt.GetLength(0); i++)
                 for (int j = 0; j < dt.GetLength(1); j++)
-                    dt2[i, j] = dt[i, j] <= threshold * max ? 0 : dt[i, j];
+                    dt2[i, j] = dt[i, j] <= threshold * max ? 0 : dt[i, j]; // thresholded distance transform by parameter
 
-            List<Tuple<int, int>> maxima = GetLocalMaxima(dt2);
-
+            List<Tuple<int, int>> maxima = GetLocalMaxima(dt2); // find maxima of thresholded dt
+            DMaxHeap<MPixel> heap = new DMaxHeap<MPixel>();
             int label = 1;
-            foreach (Tuple<int, int> t in maxima)
+            foreach (Tuple<int, int> t in maxima) // start at maxima
             {
                 MPixel p = new MPixel(t.Item1, t.Item2, label++, dt[t.Item1, t.Item2]);
                 heap.Add(p);
@@ -96,7 +102,7 @@ namespace INFOIBV
             while (heap.Count > 0)
             {
                 MPixel p = heap.Extract();
-                int[] labels = new int[4];
+                int[] labels = new int[4]; // labels of neighbours
                 if (p.X > 0 && pixels[p.X - 1, p.Y] != null)
                     labels[0] = pixels[p.X - 1, p.Y].Label;
                 if (p.Y > 0 && pixels[p.X, p.Y - 1] != null)
@@ -109,17 +115,18 @@ namespace INFOIBV
                 Array.Sort(labels);
 
                 int i = 0;
-                while (i < 4 && labels[i] == 0)
+                while (i < 4 && labels[i] == 0) // first neighbour label
                     i++;
 
                 bool same = true;
                 for (; i < 3; i++)
-                    if (labels[i] != labels[i + 1])
+                    if (labels[i] != labels[i + 1]) // neighbours with different labels
                         same = false;
 
-                if (same && p.Label == 0)
-                    p.Label = labels[3];
+                if (same && p.Label == 0) // all neighbour labels the same and current pixel's label not yet set
+                    p.Label = labels[3];  // give the same label as neighbours
 
+                // add all unprocessed neighbours
                 MPixel newPixel;
                 if (p.X > 0 && pixels[p.X - 1, p.Y] == null)
                 {
@@ -147,6 +154,7 @@ namespace INFOIBV
                 }
             }
 
+            // create mask from labels
             for (int x = 0; x < shed.GetLength(0); x++)
                 for (int y = 0; y < shed.GetLength(1); y++)
                     shed[x, y] = pixels[x, y] == null || pixels[x, y].Label != 0;
