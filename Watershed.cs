@@ -81,7 +81,7 @@ namespace INFOIBV
 
             for (int i = 0; i < dt.GetLength(0); i++)
                 for (int j = 0; j < dt.GetLength(1); j++)
-                    dt2[i, j] = dt[i, j] < threshold * max ? 0 : dt[i, j];
+                    dt2[i, j] = dt[i, j] <= threshold * max ? 0 : dt[i, j];
 
             List<Tuple<int, int>> maxima = GetLocalMaxima(dt2);
 
@@ -149,7 +149,7 @@ namespace INFOIBV
 
             for (int x = 0; x < shed.GetLength(0); x++)
                 for (int y = 0; y < shed.GetLength(1); y++)
-                    shed[x, y] = pixels[x, y].Label != 0;
+                    shed[x, y] = pixels[x, y] == null || pixels[x, y].Label != 0;
 
             return shed;
         }

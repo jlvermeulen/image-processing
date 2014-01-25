@@ -14,6 +14,7 @@ namespace INFOIBV
         private int currentStep = 0, inputStep = 0;
         private int[,] prevData, data;
         private Dictionary<Tuple<int, int>, List<Tuple<int, int>>> groups, filtered;
+        private bool applied = false;
 
         public INFOIBV()
         {
@@ -40,6 +41,7 @@ namespace INFOIBV
                     this.groups = this.filtered = null;
                     this.outputImage = null;
                     this.outputImageBox.Image = null;
+                    this.applied = false;
                 }
             }
         }
@@ -54,8 +56,11 @@ namespace INFOIBV
 
         private void step_Click(object sender, EventArgs e)
         {
-            if (currentStep >= STEPS)
+            if (currentStep >= STEPS || this.inputImage == null)
                 return;
+
+            if (!this.applied)
+                this.apply.PerformClick();
 
             this.inputImage.Dispose();
             this.inputImageBox.Image = this.inputImage = this.outputImage;
@@ -66,10 +71,15 @@ namespace INFOIBV
 
             this.inputStep++;
             this.currentStep++;
+
+            this.applied = false;
         }
 
         private void apply_Click(object sender, EventArgs e)
         {
+            if (this.inputImage == null)
+                return;
+
             switch (currentStep)
             {
                 case 0:
@@ -87,9 +97,10 @@ namespace INFOIBV
                     break;
 
                 case 2:
-                    this.data = Operations.OpeningByReconstruction(this.prevData, Square5x5);
+                    bool[,] structElem = this.MakeStructuringElement((int)structSize.Value, structType.Text);
+                    this.data = Operations.OpeningByReconstruction(this.prevData, structElem);
                     this.data = Operations.Invert(this.data);
-                    this.data = Operations.OpeningByReconstruction(this.data, Square5x5);
+                    this.data = Operations.OpeningByReconstruction(this.data, structElem);
                     this.data = Operations.Invert(this.data);
                     break;
 
@@ -108,7 +119,7 @@ namespace INFOIBV
                     break;
 
                 case 6:
-                    this.filtered = Operations.FilterByArea(this.prevData, this.filtered, (int)minArea.Value, (int)maxArea.Value);
+                    this.filtered = Operations.FilterByArea(this.prevData, this.groups, (int)minArea.Value, (int)maxArea.Value);
                     this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
                     break;
 
@@ -117,20 +128,61 @@ namespace INFOIBV
             }
 
             this.outputImageBox.Image = this.outputImage = Operations.CreateImage(this.data);
+            this.applied = true;
         }
 
         private void skip_Click(object sender, EventArgs e)
         {
+            if (this.inputImage == null)
+                return;
+
             do
             {
                 this.apply.PerformClick();
                 this.prevData = this.data;
+                this.groups = this.filtered;
             }
             while (currentStep++ < STEPS);
 
             this.currentStep = this.inputStep;
+            this.applied = false;
         }
 
-        private bool[,] Square5x5 = new bool[,] { { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true }, { true, true, true, true, true } };
+        private bool[,] MakeStructuringElement(int size, string type)
+        {
+            bool[,] elem = new bool[size, size];
+            int half = size / 2;
+
+            switch (type)
+            {
+                case "Circle":
+                    for (int i = 0; i < size; i++)
+                        for (int j = 0; j < size; j++)
+                            if (Math.Sqrt((i - half) * (i - half) + (j - half) * (j - half)) <= half)
+                                elem[i, j] = true;
+                    break;
+
+                case "Cross":
+                    for (int i = 0; i < size; i++)
+                        elem[i, i] = elem[size - i - 1, i] = true;
+                    break;
+
+                case "Plus":
+                    for (int i = 0; i < size; i++)
+                        elem[i, half] = elem[half, i] = true;
+                    break;
+
+                case "Square":
+                    for (int i = 0; i < size; i++)
+                        for (int j = 0; j < size; j++)
+                            elem[i, j] = true;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return elem;
+        }
     }
 }
