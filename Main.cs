@@ -17,7 +17,6 @@ namespace INFOIBV
         private Dictionary<Tuple<int, int>, List<Tuple<int, int>>> groups, filtered;
         private bool applied = false;
         private Dictionary<string, string[]> presets = new Dictionary<string, string[]>();
-        private bool clickCompact, clickArea, clickConvex;
 
         public INFOIBV()
         {
@@ -125,21 +124,18 @@ namespace INFOIBV
                 case 4:
                     this.groups = this.filtered = Operations.Groups(this.prevData);
                     this.data = Operations.Label(this.groups, this.prevData.GetLength(0), this.prevData.GetLength(1));
-                    this.clickCompact = false;
                     break;
 
                 // filter by compactness
                 case 5:
                     this.filtered = Operations.FilterByCompactness(this.prevData, this.groups, (double)minComp.Value, (double)maxComp.Value);
                     this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
-                    this.clickArea = false;
                     break;
 
                 // filter by area
                 case 6:
                     this.filtered = Operations.FilterByArea(this.prevData, this.groups, (int)minArea.Value, (int)maxArea.Value);
                     this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
-                    this.clickConvex = false;
                     break;
 
                 // filter by convexity
@@ -314,34 +310,16 @@ namespace INFOIBV
                     decimal r = (decimal)Operations.Compactness(this.prevData, xx, yy);
                     decimal rLow = Math.Floor(r * 100) / 100;
                     decimal rHigh = Math.Ceiling(r * 100) / 100;
-                    if (this.clickCompact)
-                    {
-                        minComp.Value = Math.Min(minComp.Value, rLow);
-                        maxComp.Value = Math.Max(maxComp.Value, rHigh);
-                    }
-                    else
-                    {
-                        minComp.Value = rLow;
-                        maxComp.Value = rHigh;
-                    }
-                    this.clickCompact = true;
+                    minComp.Value = Math.Min(minComp.Value, rLow);
+                    maxComp.Value = Math.Max(maxComp.Value, rHigh);
                     break;
                     
                 case 6: // Area
                     decimal a = (decimal)Operations.Area(Operations.Perimeter(this.prevData, xx, yy));
                     decimal aLow = Math.Floor(a * 100) / 100;
                     decimal aHigh = Math.Ceiling(a * 100) / 100;
-                    if (this.clickArea)
-                    {
-                        minArea.Value = Math.Min(minArea.Value, aLow);
-                        maxArea.Value = Math.Max(maxArea.Value, aHigh);
-                    }
-                    else
-                    {
-                        minArea.Value = aLow;
-                        maxArea.Value = aHigh;
-                    }
-                    this.clickArea = true;
+                    minArea.Value = Math.Min(minArea.Value, aLow);
+                    maxArea.Value = Math.Max(maxArea.Value, aHigh);
                     break;
 
                 case 7: // Convexity
@@ -389,17 +367,8 @@ namespace INFOIBV
                     decimal c = (decimal) (area / hullArea);
                     decimal cLow = Math.Floor(c * 100) / 100;
                     decimal cHigh = Math.Ceiling(c * 100) / 100;
-                    if (this.clickConvex)
-                    {
-                        minConv.Value = Math.Min(minConv.Value, cLow);
-                        maxConv.Value = Math.Max(maxConv.Value, cHigh);
-                    }
-                    else
-                    {
-                        minConv.Value = cLow;
-                        maxConv.Value = cHigh;
-                    }
-                    this.clickConvex = true;
+                    minConv.Value = Math.Min(minConv.Value, cLow);
+                    maxConv.Value = Math.Max(maxConv.Value, cHigh);
                     break;
 
                 default:
