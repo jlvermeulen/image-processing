@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 namespace INFOIBV
 {
@@ -15,10 +16,12 @@ namespace INFOIBV
         private int[,] prevData, data;
         private Dictionary<Tuple<int, int>, List<Tuple<int, int>>> groups, filtered;
         private bool applied = false;
+        private Dictionary<string, string[]> presets = new Dictionary<string, string[]>();
 
         public INFOIBV()
         {
             InitializeComponent();
+            this.LoadPresets();
         }
 
         private void LoadImageButton_Click(object sender, EventArgs e)
@@ -188,6 +191,82 @@ namespace INFOIBV
             }
 
             return elem;
+        }
+
+        private void LoadPresets()
+        {
+            StreamReader reader = new StreamReader("Presets.txt");
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                string[] nameValue = line.Split('=');
+                this.presets[nameValue[0]] = nameValue[1].Split(';');
+            }
+            reader.Close();
+
+            List<string> names = new List<string>(this.presets.Keys);
+            names.Sort();
+            this.preset.Items.Clear();
+            this.preset.Items.AddRange(names.ToArray());
+        }
+
+        private void preset_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string[] settings = this.presets[(string)this.preset.SelectedItem];
+            this.red.Value = decimal.Parse(settings[0]);
+            this.green.Value = decimal.Parse(settings[1]);
+            this.blue.Value = decimal.Parse(settings[2]);
+            this.lowerThresh.Value = decimal.Parse(settings[3]);
+            this.upperThresh.Value = decimal.Parse(settings[4]);
+            this.structSize.Value = decimal.Parse(settings[5]);
+            this.structType.Text = settings[6];
+            this.shedThresh.Value = decimal.Parse(settings[7]);
+            this.minComp.Value = decimal.Parse(settings[8]);
+            this.maxComp.Value = decimal.Parse(settings[9]);
+            this.minArea.Value = decimal.Parse(settings[10]);
+            this.maxArea.Value = decimal.Parse(settings[11]);
+            this.minConv.Value = decimal.Parse(settings[12]);
+            this.maxConv.Value = decimal.Parse(settings[13]);
+        }
+
+        private void savePreset_Click(object sender, EventArgs e)
+        {
+            string name = this.preset.Text;
+            if (this.presets.ContainsKey(name))
+                return;
+
+            string[] settings = new string[14];
+            settings[0] = this.red.Value.ToString();
+            settings[1] = this.green.Value.ToString();
+            settings[2] = this.blue.Value.ToString();
+            settings[3] = this.lowerThresh.Value.ToString();
+            settings[4] = this.upperThresh.Value.ToString();
+            settings[5] = this.structSize.Value.ToString();
+            settings[6] = this.structType.Text;
+            settings[7] = this.shedThresh.Value.ToString();
+            settings[8] = this.minComp.Value.ToString();
+            settings[9] = this.maxComp.Value.ToString();
+            settings[10] = this.minArea.Value.ToString();
+            settings[11] = this.maxArea.Value.ToString();
+            settings[12] = this.minConv.Value.ToString();
+            settings[13] = this.maxConv.Value.ToString();
+
+            this.presets[name] = settings;
+            this.WritePresets();
+            this.LoadPresets();
+        }
+
+        private void WritePresets()
+        {
+            StreamWriter writer = new StreamWriter("Presets.txt");
+            foreach (KeyValuePair<string, string[]> kvp in this.presets)
+            {
+                writer.Write(kvp.Key + "=" + kvp.Value[0]);
+                for (int i = 1; i < kvp.Value.Length; i++)
+                    writer.Write(";" + kvp.Value[i]);
+                writer.WriteLine();
+            }
+            writer.Close();
         }
     }
 }

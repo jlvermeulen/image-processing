@@ -73,6 +73,8 @@
             this.minConv = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.maxConv = new System.Windows.Forms.NumericUpDown();
+            this.preset = new System.Windows.Forms.ComboBox();
+            this.savePreset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.inputImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.red)).BeginInit();
@@ -138,7 +140,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(948, 11);
+            this.saveButton.Location = new System.Drawing.Point(531, 12);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(95, 23);
             this.saveButton.TabIndex = 2;
@@ -161,7 +163,7 @@
             this.step.Location = new System.Drawing.Point(1049, 528);
             this.step.Name = "step";
             this.step.Size = new System.Drawing.Size(80, 29);
-            this.step.TabIndex = 17;
+            this.step.TabIndex = 19;
             this.step.Text = "Next step";
             this.step.UseVisualStyleBackColor = true;
             this.step.Click += new System.EventHandler(this.step_Click);
@@ -171,7 +173,7 @@
             this.skip.Location = new System.Drawing.Point(1219, 528);
             this.skip.Name = "skip";
             this.skip.Size = new System.Drawing.Size(80, 29);
-            this.skip.TabIndex = 19;
+            this.skip.TabIndex = 21;
             this.skip.Text = "Apply all";
             this.skip.UseVisualStyleBackColor = true;
             this.skip.Click += new System.EventHandler(this.skip_Click);
@@ -181,7 +183,7 @@
             this.apply.Location = new System.Drawing.Point(1134, 528);
             this.apply.Name = "apply";
             this.apply.Size = new System.Drawing.Size(80, 29);
-            this.apply.TabIndex = 18;
+            this.apply.TabIndex = 20;
             this.apply.Text = "Apply step";
             this.apply.UseVisualStyleBackColor = true;
             this.apply.Click += new System.EventHandler(this.apply_Click);
@@ -202,7 +204,7 @@
             0});
             this.red.Name = "red";
             this.red.Size = new System.Drawing.Size(75, 20);
-            this.red.TabIndex = 3;
+            this.red.TabIndex = 5;
             this.red.Value = new decimal(new int[] {
             2126,
             0,
@@ -225,7 +227,7 @@
             0});
             this.green.Name = "green";
             this.green.Size = new System.Drawing.Size(75, 20);
-            this.green.TabIndex = 4;
+            this.green.TabIndex = 6;
             this.green.Value = new decimal(new int[] {
             7152,
             0,
@@ -248,7 +250,7 @@
             0});
             this.blue.Name = "blue";
             this.blue.Size = new System.Drawing.Size(75, 20);
-            this.blue.TabIndex = 5;
+            this.blue.TabIndex = 7;
             this.blue.Value = new decimal(new int[] {
             722,
             0,
@@ -265,7 +267,7 @@
             0});
             this.lowerThresh.Name = "lowerThresh";
             this.lowerThresh.Size = new System.Drawing.Size(75, 20);
-            this.lowerThresh.TabIndex = 6;
+            this.lowerThresh.TabIndex = 8;
             // 
             // upperThresh
             // 
@@ -277,7 +279,7 @@
             0});
             this.upperThresh.Name = "upperThresh";
             this.upperThresh.Size = new System.Drawing.Size(75, 20);
-            this.upperThresh.TabIndex = 7;
+            this.upperThresh.TabIndex = 9;
             this.upperThresh.Value = new decimal(new int[] {
             180,
             0,
@@ -300,7 +302,7 @@
             0});
             this.shedThresh.Name = "shedThresh";
             this.shedThresh.Size = new System.Drawing.Size(75, 20);
-            this.shedThresh.TabIndex = 10;
+            this.shedThresh.TabIndex = 12;
             this.shedThresh.Value = new decimal(new int[] {
             1,
             0,
@@ -323,7 +325,7 @@
             0});
             this.minComp.Name = "minComp";
             this.minComp.Size = new System.Drawing.Size(75, 20);
-            this.minComp.TabIndex = 11;
+            this.minComp.TabIndex = 13;
             // 
             // maxComp
             // 
@@ -341,7 +343,7 @@
             0});
             this.maxComp.Name = "maxComp";
             this.maxComp.Size = new System.Drawing.Size(75, 20);
-            this.maxComp.TabIndex = 12;
+            this.maxComp.TabIndex = 14;
             this.maxComp.Value = new decimal(new int[] {
             6,
             0,
@@ -358,7 +360,7 @@
             0});
             this.minArea.Name = "minArea";
             this.minArea.Size = new System.Drawing.Size(75, 20);
-            this.minArea.TabIndex = 13;
+            this.minArea.TabIndex = 15;
             // 
             // maxArea
             // 
@@ -370,7 +372,7 @@
             0});
             this.maxArea.Name = "maxArea";
             this.maxArea.Size = new System.Drawing.Size(75, 20);
-            this.maxArea.TabIndex = 14;
+            this.maxArea.TabIndex = 16;
             this.maxArea.Value = new decimal(new int[] {
             10000,
             0,
@@ -574,7 +576,7 @@
             this.structType.Location = new System.Drawing.Point(87, 35);
             this.structType.Name = "structType";
             this.structType.Size = new System.Drawing.Size(75, 21);
-            this.structType.TabIndex = 9;
+            this.structType.TabIndex = 11;
             this.structType.Text = "Square";
             // 
             // structSize
@@ -597,7 +599,7 @@
             0});
             this.structSize.Name = "structSize";
             this.structSize.Size = new System.Drawing.Size(75, 20);
-            this.structSize.TabIndex = 8;
+            this.structSize.TabIndex = 10;
             this.structSize.Value = new decimal(new int[] {
             5,
             0,
@@ -642,7 +644,7 @@
             0});
             this.minConv.Name = "minConv";
             this.minConv.Size = new System.Drawing.Size(75, 20);
-            this.minConv.TabIndex = 15;
+            this.minConv.TabIndex = 17;
             // 
             // label14
             // 
@@ -669,18 +671,39 @@
             0});
             this.maxConv.Name = "maxConv";
             this.maxConv.Size = new System.Drawing.Size(75, 20);
-            this.maxConv.TabIndex = 16;
+            this.maxConv.TabIndex = 18;
             this.maxConv.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
             // 
+            // preset
+            // 
+            this.preset.FormattingEnabled = true;
+            this.preset.Location = new System.Drawing.Point(1135, 13);
+            this.preset.Name = "preset";
+            this.preset.Size = new System.Drawing.Size(164, 21);
+            this.preset.TabIndex = 4;
+            this.preset.SelectedIndexChanged += new System.EventHandler(this.preset_SelectedIndexChanged);
+            // 
+            // savePreset
+            // 
+            this.savePreset.Location = new System.Drawing.Point(1049, 12);
+            this.savePreset.Name = "savePreset";
+            this.savePreset.Size = new System.Drawing.Size(80, 23);
+            this.savePreset.TabIndex = 3;
+            this.savePreset.Text = "Save preset";
+            this.savePreset.UseVisualStyleBackColor = true;
+            this.savePreset.Click += new System.EventHandler(this.savePreset_Click);
+            // 
             // INFOIBV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1311, 571);
+            this.Controls.Add(this.savePreset);
+            this.Controls.Add(this.preset);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
@@ -696,9 +719,11 @@
             this.Controls.Add(this.inputImageBox);
             this.Controls.Add(this.imageFileName);
             this.Controls.Add(this.LoadImageButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Location = new System.Drawing.Point(10, 10);
             this.Name = "INFOIBV";
             this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "INFOIBV";
             ((System.ComponentModel.ISupportInitialize)(this.inputImageBox)).EndInit();
@@ -782,6 +807,8 @@
         private System.Windows.Forms.NumericUpDown minConv;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.NumericUpDown maxConv;
+        private System.Windows.Forms.ComboBox preset;
+        private System.Windows.Forms.Button savePreset;
 
     }
 }
