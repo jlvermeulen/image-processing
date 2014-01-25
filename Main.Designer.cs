@@ -112,7 +112,7 @@
             // openImageDialog
             // 
             this.openImageDialog.Filter = "Bitmap files (*.bmp;*.gif;*.jpg;*.png;*.tiff;*.jpeg)|*.bmp;*.gif;*.jpg;*.png;*.ti" +
-                "ff;*.jpeg";
+    "ff;*.jpeg";
             this.openImageDialog.InitialDirectory = "..\\..\\images";
             // 
             // imageFileName
@@ -355,7 +355,7 @@
             // 
             this.minArea.Location = new System.Drawing.Point(6, 35);
             this.minArea.Maximum = new decimal(new int[] {
-            1000,
+            250000,
             0,
             0,
             0});
@@ -702,7 +702,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1294, 571);
+            this.ClientSize = new System.Drawing.Size(1311, 571);
             this.Controls.Add(this.savePreset);
             this.Controls.Add(this.preset);
             this.Controls.Add(this.groupBox7);
