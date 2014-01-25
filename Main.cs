@@ -312,30 +312,34 @@ namespace INFOIBV
             {
                 case 5: // Compactness
                     decimal r = (decimal)Operations.Compactness(this.prevData, xx, yy);
+                    decimal rLow = Math.Floor(r * 100) / 100;
+                    decimal rHigh = Math.Ceiling(r * 100) / 100;
                     if (this.clickCompact)
                     {
-                        minComp.Value = Math.Min(minComp.Value, r);
-                        maxComp.Value = Math.Max(maxComp.Value, r);
+                        minComp.Value = Math.Min(minComp.Value, rLow);
+                        maxComp.Value = Math.Max(maxComp.Value, rHigh);
                     }
                     else
                     {
-                        minComp.Value = r;
-                        maxComp.Value = r;
+                        minComp.Value = rLow;
+                        maxComp.Value = rHigh;
                     }
                     this.clickCompact = true;
                     break;
                     
                 case 6: // Area
                     decimal a = (decimal)Operations.Area(Operations.Perimeter(this.prevData, xx, yy));
+                    decimal aLow = Math.Floor(a * 100) / 100;
+                    decimal aHigh = Math.Ceiling(a * 100) / 100;
                     if (this.clickArea)
                     {
-                        minArea.Value = Math.Min(minArea.Value, a);
-                        maxArea.Value = Math.Max(maxArea.Value, a);
+                        minArea.Value = Math.Min(minArea.Value, aLow);
+                        maxArea.Value = Math.Max(maxArea.Value, aHigh);
                     }
                     else
                     {
-                        minArea.Value = a;
-                        maxArea.Value = a;
+                        minArea.Value = aLow;
+                        maxArea.Value = aHigh;
                     }
                     this.clickArea = true;
                     break;
@@ -383,15 +387,17 @@ namespace INFOIBV
                     double hullArea = Operations.PolygonArea(Operations.ConvexHull(points));
                     double area = Operations.Area(Operations.Perimeter(this.prevData, xx, yy));
                     decimal c = (decimal) (area / hullArea);
+                    decimal cLow = Math.Floor(c * 100) / 100;
+                    decimal cHigh = Math.Ceiling(c * 100) / 100;
                     if (this.clickConvex)
                     {
-                        minConv.Value = Math.Min(minConv.Value, c);
-                        maxConv.Value = Math.Max(maxConv.Value, c);
+                        minConv.Value = Math.Min(minConv.Value, cLow);
+                        maxConv.Value = Math.Max(maxConv.Value, cHigh);
                     }
                     else
                     {
-                        minConv.Value = c;
-                        maxConv.Value = c;
+                        minConv.Value = cLow;
+                        maxConv.Value = cHigh;
                     }
                     this.clickConvex = true;
                     break;
