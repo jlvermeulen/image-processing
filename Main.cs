@@ -296,5 +296,79 @@ namespace INFOIBV
             }
             writer.Close();
         }
+
+        private void inputImageBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (this.data == null) return;
+
+            int xx = e.X - (inputImageBox.Width - inputImageBox.Image.Width) / 2;
+            int yy = e.Y - (inputImageBox.Height - inputImageBox.Image.Height) / 2;
+
+            switch (currentStep)
+            {
+                case 5: // Compactness
+                    decimal r = (decimal)Operations.Compactness(this.prevData, xx, yy);
+                    minComp.Value = Math.Min(minComp.Value, r);
+                    maxComp.Value = Math.Max(maxComp.Value, r);
+                    break;
+                    
+                case 6: // Area
+                    decimal a = (decimal)Operations.Area(Operations.Perimeter(this.prevData, xx, yy));
+                    minArea.Value = Math.Min(minArea.Value, a);
+                    maxArea.Value = Math.Max(maxArea.Value, a);
+                    break;
+
+                case 7: // Convexity
+                    UnionFind<Tuple<int, int>> unionFind = new UnionFind<Tuple<int, int>>();
+                    for (int x = 0; x < this.prevData.GetLength(0); x++)
+                        for (int y = 0; y < this.prevData.GetLength(1); y++)
+                        {
+                            if (this.prevData[x, y] == 0)
+                                continue;
+
+                            Tuple<int, int> xy = new Tuple<int, int>(x, y);
+                            unionFind.Make(xy);
+                            if (x > 0)
+                                unionFind.Union(xy, new Tuple<int, int>(x - 1, y));
+                            if (y > 0)
+                                unionFind.Union(xy, new Tuple<int, int>(x, y - 1));
+                        }
+
+                    Tuple<int, int> root;
+                    try
+                    {
+                        root = unionFind.Find(new Tuple<int, int>(xx, yy));
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                    List<Tuple<int, int>> points = new List<Tuple<int, int>>();
+
+                    for (int x = 0; x < this.prevData.GetLength(0); x++)
+                    {
+                        for (int y = 0; y < this.prevData.GetLength(1); y++)
+                        {
+                            if (this.prevData[x, y] == 0)
+                                continue;
+
+                            Tuple<int, int> pos = new Tuple<int, int>(x, y);
+                            if (unionFind.Find(pos) == root)
+                                points.Add(pos);
+                        }
+                    }
+
+                    double hullArea = Operations.PolygonArea(Operations.ConvexHull(points));
+                    double area = Operations.Area(Operations.Perimeter(this.prevData, xx, yy));
+                    decimal c = (decimal) (area / hullArea);
+                    minConv.Value = Math.Min(minConv.Value, c);
+                    maxConv.Value = Math.Max(maxConv.Value, c);
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
     }
 }
