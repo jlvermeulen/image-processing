@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compactness.cs" />
+    <Compile Include="ConvexHull.cs" />
     <Compile Include="Convolution.cs" />
     <Compile Include="Dilation.cs" />
     <Compile Include="Erosion.cs" />

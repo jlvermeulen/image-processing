@@ -68,6 +68,11 @@
             this.label11 = new System.Windows.Forms.Label();
             this.structType = new System.Windows.Forms.ComboBox();
             this.structSize = new System.Windows.Forms.NumericUpDown();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.minConv = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
+            this.maxConv = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.inputImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.red)).BeginInit();
@@ -87,6 +92,9 @@
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.structSize)).BeginInit();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.minConv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxConv)).BeginInit();
             this.SuspendLayout();
             // 
             // LoadImageButton
@@ -150,30 +158,30 @@
             // 
             // step
             // 
-            this.step.Location = new System.Drawing.Point(1049, 522);
+            this.step.Location = new System.Drawing.Point(1049, 528);
             this.step.Name = "step";
-            this.step.Size = new System.Drawing.Size(80, 35);
-            this.step.TabIndex = 15;
+            this.step.Size = new System.Drawing.Size(80, 29);
+            this.step.TabIndex = 17;
             this.step.Text = "Next step";
             this.step.UseVisualStyleBackColor = true;
             this.step.Click += new System.EventHandler(this.step_Click);
             // 
             // skip
             // 
-            this.skip.Location = new System.Drawing.Point(1219, 522);
+            this.skip.Location = new System.Drawing.Point(1219, 528);
             this.skip.Name = "skip";
-            this.skip.Size = new System.Drawing.Size(80, 35);
-            this.skip.TabIndex = 17;
+            this.skip.Size = new System.Drawing.Size(80, 29);
+            this.skip.TabIndex = 19;
             this.skip.Text = "Apply all";
             this.skip.UseVisualStyleBackColor = true;
             this.skip.Click += new System.EventHandler(this.skip_Click);
             // 
             // apply
             // 
-            this.apply.Location = new System.Drawing.Point(1134, 522);
+            this.apply.Location = new System.Drawing.Point(1134, 528);
             this.apply.Name = "apply";
-            this.apply.Size = new System.Drawing.Size(80, 35);
-            this.apply.TabIndex = 16;
+            this.apply.Size = new System.Drawing.Size(80, 29);
+            this.apply.TabIndex = 18;
             this.apply.Text = "Apply step";
             this.apply.UseVisualStyleBackColor = true;
             this.apply.Click += new System.EventHandler(this.apply_Click);
@@ -379,7 +387,7 @@
             this.groupBox1.Controls.Add(this.blue);
             this.groupBox1.Location = new System.Drawing.Point(1049, 45);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(250, 68);
+            this.groupBox1.Size = new System.Drawing.Size(250, 63);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Grayscale conversion";
@@ -417,9 +425,9 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.lowerThresh);
             this.groupBox2.Controls.Add(this.upperThresh);
-            this.groupBox2.Location = new System.Drawing.Point(1049, 119);
+            this.groupBox2.Location = new System.Drawing.Point(1049, 114);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(250, 68);
+            this.groupBox2.Size = new System.Drawing.Size(250, 63);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Window slicing";
@@ -446,9 +454,9 @@
             // 
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.shedThresh);
-            this.groupBox3.Location = new System.Drawing.Point(1049, 267);
+            this.groupBox3.Location = new System.Drawing.Point(1049, 252);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(250, 68);
+            this.groupBox3.Size = new System.Drawing.Size(250, 63);
             this.groupBox3.TabIndex = 21;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Watershed";
@@ -468,9 +476,9 @@
             this.groupBox4.Controls.Add(this.minComp);
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.maxComp);
-            this.groupBox4.Location = new System.Drawing.Point(1049, 341);
+            this.groupBox4.Location = new System.Drawing.Point(1049, 321);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(250, 68);
+            this.groupBox4.Size = new System.Drawing.Size(250, 63);
             this.groupBox4.TabIndex = 22;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Compactness filter";
@@ -499,9 +507,9 @@
             this.groupBox5.Controls.Add(this.label10);
             this.groupBox5.Controls.Add(this.minArea);
             this.groupBox5.Controls.Add(this.maxArea);
-            this.groupBox5.Location = new System.Drawing.Point(1049, 415);
+            this.groupBox5.Location = new System.Drawing.Point(1049, 390);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(250, 68);
+            this.groupBox5.Size = new System.Drawing.Size(250, 63);
             this.groupBox5.TabIndex = 23;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Area filter";
@@ -530,9 +538,9 @@
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Controls.Add(this.structType);
             this.groupBox6.Controls.Add(this.structSize);
-            this.groupBox6.Location = new System.Drawing.Point(1049, 193);
+            this.groupBox6.Location = new System.Drawing.Point(1049, 183);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(250, 68);
+            this.groupBox6.Size = new System.Drawing.Size(250, 63);
             this.groupBox6.TabIndex = 24;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Opening by reconstruction";
@@ -596,11 +604,84 @@
             0,
             0});
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.label13);
+            this.groupBox7.Controls.Add(this.minConv);
+            this.groupBox7.Controls.Add(this.label14);
+            this.groupBox7.Controls.Add(this.maxConv);
+            this.groupBox7.Location = new System.Drawing.Point(1049, 459);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(250, 63);
+            this.groupBox7.TabIndex = 23;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Convexity filter";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(84, 19);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(27, 13);
+            this.label13.TabIndex = 17;
+            this.label13.Text = "Max";
+            // 
+            // minConv
+            // 
+            this.minConv.DecimalPlaces = 2;
+            this.minConv.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.minConv.Location = new System.Drawing.Point(6, 35);
+            this.minConv.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.minConv.Name = "minConv";
+            this.minConv.Size = new System.Drawing.Size(75, 20);
+            this.minConv.TabIndex = 15;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 19);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(24, 13);
+            this.label14.TabIndex = 16;
+            this.label14.Text = "Min";
+            // 
+            // maxConv
+            // 
+            this.maxConv.DecimalPlaces = 2;
+            this.maxConv.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.maxConv.Location = new System.Drawing.Point(87, 35);
+            this.maxConv.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.maxConv.Name = "maxConv";
+            this.maxConv.Size = new System.Drawing.Size(75, 20);
+            this.maxConv.TabIndex = 16;
+            this.maxConv.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // INFOIBV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1311, 571);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -645,6 +726,10 @@
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.structSize)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.minConv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.maxConv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -692,6 +777,11 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox structType;
         private System.Windows.Forms.NumericUpDown structSize;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.NumericUpDown minConv;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.NumericUpDown maxConv;
 
     }
 }

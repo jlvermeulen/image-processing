@@ -7,7 +7,7 @@ namespace INFOIBV
 {
     public partial class INFOIBV : Form
     {
-        const int STEPS = 6;
+        const int STEPS = 7;
 
         private Bitmap inputImage;
         private Bitmap outputImage;
@@ -120,6 +120,11 @@ namespace INFOIBV
 
                 case 6:
                     this.filtered = Operations.FilterByArea(this.prevData, this.groups, (int)minArea.Value, (int)maxArea.Value);
+                    this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
+                    break;
+
+                case 7:
+                    this.filtered = Operations.FilterByConvexity(this.prevData, this.groups, (double)minConv.Value, (double)maxConv.Value);
                     this.data = Operations.Label(this.filtered, this.prevData.GetLength(0), this.prevData.GetLength(1));
                     break;
 
