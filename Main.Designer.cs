@@ -75,6 +75,7 @@
             this.maxConv = new System.Windows.Forms.NumericUpDown();
             this.preset = new System.Windows.Forms.ComboBox();
             this.savePreset = new System.Windows.Forms.Button();
+            this.stepName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.inputImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.red)).BeginInit();
@@ -698,11 +699,21 @@
             this.savePreset.UseVisualStyleBackColor = true;
             this.savePreset.Click += new System.EventHandler(this.savePreset_Click);
             // 
+            // stepName
+            // 
+            this.stepName.AutoSize = true;
+            this.stepName.Location = new System.Drawing.Point(875, 17);
+            this.stepName.Name = "stepName";
+            this.stepName.Size = new System.Drawing.Size(172, 13);
+            this.stepName.TabIndex = 15;
+            this.stepName.Text = "Current step: Grayscale conversion";
+            // 
             // INFOIBV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1286, 571);
+            this.Controls.Add(this.stepName);
             this.Controls.Add(this.savePreset);
             this.Controls.Add(this.preset);
             this.Controls.Add(this.groupBox7);
@@ -810,6 +821,7 @@
         private System.Windows.Forms.NumericUpDown maxConv;
         private System.Windows.Forms.ComboBox preset;
         private System.Windows.Forms.Button savePreset;
+        private System.Windows.Forms.Label stepName;
 
     }
 }

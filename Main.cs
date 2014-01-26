@@ -80,6 +80,40 @@ namespace INFOIBV
             this.inputStep++;
             this.currentStep++;
             this.applied = false;
+
+            int w = this.stepName.Width;
+            this.stepName.Text = "Current step: ";
+            switch (this.inputStep)
+            {
+                case 0:
+                    this.stepName.Text += "Grayscale conversion";
+                    break;
+                case 1:
+                    this.stepName.Text += "Window slicing";
+                    break;
+                case 2:
+                    this.stepName.Text += "Opening by reconstruction";
+                    break;
+                case 3:
+                    this.stepName.Text += "Watershed";
+                    break;
+                case 4:
+                    this.stepName.Text += "Labeling";
+                    break;
+                case 5:
+                    this.stepName.Text += "Filter by compactness";
+                    break;
+                case 6:
+                    this.stepName.Text += "Filter by area";
+                    break;
+                case 7:
+                    this.stepName.Text += "Filter by convexity";
+                    break;
+                default:
+                    this.stepName.Text = "";
+                    break;
+            }
+            this.stepName.Left += (w - this.stepName.Width);
         }
 
         // apply current step with current settings
